@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Максим Акимов](https://up.htmlacademy.ru/javascript/14/user/352625).
-* Наставник: `Неизвестно`.
+* Наставник: [Михаил Новиков](https://htmlacademy.ru/profile/id793985).
 
 ---
 
