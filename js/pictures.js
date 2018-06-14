@@ -95,9 +95,7 @@ var generateData = function () {
 var data = generateData();
 
 // Блок шаблона
-var photoTemplate = document.querySelector('#picture')
-.content
-.querySelector('.picture__link');
+var photoTemplate = document.querySelector('#picture').content.querySelector('.picture__link');
 
 // Фрагмент
 var fragment = document.createDocumentFragment();
@@ -135,11 +133,21 @@ photosList.appendChild(fragment);
 // Работа с модалкой .big-picture
 // ---
 
+// Скрытие блока 'block' с помощью добавления скрывающего класс 'hiddenClass'
+var hideBlock = function (block, hiddenClass) {
+  block.classList.add(hiddenClass);
+};
+
+// Показ скрытого блока 'block' с помощью удаления скрывающего класс 'hiddenClass'
+var showBlock = function (block, hiddenClass) {
+  block.classList.remove(hiddenClass);
+};
+
 // Модалка большой фотографии
 var bigPhoto = document.querySelector('.big-picture');
 
 // Показ модалки
-bigPhoto.classList.remove('hidden');
+showBlock(bigPhoto, 'hidden');
 
 // Наполнение тега модалки контентом
 // 1. Путь к фотографии
@@ -158,9 +166,12 @@ var commentsList = bigPhoto.querySelector('.social__comments');
 // Коллекция li комментариев
 var commentsCollection = commentsList.querySelectorAll('.social__comment');
 
+// Последняя li в псевдомассиве 'commentsCollection'
+var lastLi = commentsList.querySelectorAll('.social__comment:last-child')[0];
+
 // Удаление лишней li если комментарий всего один
 if (data[0].comments.length < commentsCollection.length) {
-  commentsCollection[1].classList.add('visually-hidden');
+  hideBlock(lastLi, 'visually-hidden');
 }
 
 // Заполнение атрибутов и свойств контентом
@@ -172,6 +183,14 @@ for (i = 0; i < data[0].comments.length; i++) {
 // Заполнение описания фотографии
 bigPhoto.querySelector('.social__caption').textContent = data[0].description;
 
-// Скрытие блоков
-bigPhoto.querySelector('.social__comment-count').classList.add('visually-hidden');
-bigPhoto.querySelector('.social__loadmore').classList.add('visually-hidden');
+// Cчетчик комментариев
+var commentCount = bigPhoto.querySelector('.social__comment-count');
+
+// Скрытие счетчика комментариев
+hideBlock(commentCount, 'visually-hidden');
+
+// Кнопка 'Загрузить еще'
+var buttonLoadMore = bigPhoto.querySelector('.social__loadmore');
+
+// Cкрытие кнопки 'Загрузить еще'
+hideBlock(buttonLoadMore, 'visually-hidden');
