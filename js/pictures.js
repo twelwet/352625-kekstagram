@@ -133,21 +133,31 @@ photosList.appendChild(fragment);
 // Работа с модалкой .big-picture
 // ---
 
-// Скрытие блока 'block' с помощью добавления скрывающего класс 'hiddenClass'
-var hideBlock = function (block, hiddenClass) {
-  block.classList.add(hiddenClass);
+// Добавление блоку 'block' класса 'cssClass'
+var addClass = function (block, cssClass) {
+  block.classList.add(cssClass);
 };
 
-// Показ скрытого блока 'block' с помощью удаления скрывающего класс 'hiddenClass'
-var showBlock = function (block, hiddenClass) {
-  block.classList.remove(hiddenClass);
+// Удаление у блока 'block' класса 'cssClass'
+var removeClass = function (block, cssClass) {
+  block.classList.remove(cssClass);
+};
+
+// Скрытие блока 'block'
+var hideBlock = function (block) {
+  addClass(block, 'visually-hidden');
+};
+
+// Показ блока 'block'
+var showBlock = function (block) {
+  removeClass(block, 'hidden');
 };
 
 // Модалка большой фотографии
 var bigPhoto = document.querySelector('.big-picture');
 
 // Показ модалки
-showBlock(bigPhoto, 'hidden');
+showBlock(bigPhoto);
 
 // Наполнение тега модалки контентом
 // 1. Путь к фотографии
@@ -171,7 +181,7 @@ var lastLi = commentsList.querySelectorAll('.social__comment:last-child')[0];
 
 // Удаление лишней li если комментарий всего один
 if (data[0].comments.length < commentsCollection.length) {
-  hideBlock(lastLi, 'visually-hidden');
+  hideBlock(lastLi);
 }
 
 // Заполнение атрибутов и свойств контентом
@@ -187,10 +197,10 @@ bigPhoto.querySelector('.social__caption').textContent = data[0].description;
 var commentCount = bigPhoto.querySelector('.social__comment-count');
 
 // Скрытие счетчика комментариев
-hideBlock(commentCount, 'visually-hidden');
+hideBlock(commentCount);
 
 // Кнопка 'Загрузить еще'
 var buttonLoadMore = bigPhoto.querySelector('.social__loadmore');
 
 // Cкрытие кнопки 'Загрузить еще'
-hideBlock(buttonLoadMore, 'visually-hidden');
+hideBlock(buttonLoadMore);
