@@ -143,64 +143,215 @@ var removeClass = function (block, cssClass) {
   block.classList.remove(cssClass);
 };
 
-// Скрытие блока 'block'
-var hideBlock = function (block) {
-  addClass(block, 'visually-hidden');
-};
-
-// Показ блока 'block'
-var showBlock = function (block) {
-  removeClass(block, 'hidden');
+// Удаление всех классов блока
+var removeAllClasses = function (block) {
+  block.className = '';
 };
 
 // Модалка большой фотографии
 var bigPhoto = document.querySelector('.big-picture');
 
-// Показ модалки
-showBlock(bigPhoto);
+// Кнопка закрытия попапа большой фотографии
+var crossButtonBigPhoto = bigPhoto.querySelector('.cancel');
+
+// Коллекция ссылок на изображения
+var picturesCollection = document.querySelectorAll('.picture__link');
+
+// Проходимся в цикле по всем ссылкам на изображения из коллекции
+for (i = 0; i < picturesCollection.length; i++) {
+  picturesCollection[i].addEventListener('click', function (evt) {
+    // Находим атрибут src у изображеения
+    var src = evt.target.attributes.src.value;
+
+    // Порядковый номер изображения
+    var photoNumber = (Number(src.substr(7, 2)) - 1);
+    // Наполняем модалку большого изображения контентом
+    pasteContentToBigPhoto(photoNumber);
+
+    // Показываем модалку большого изображения
+    removeClass(bigPhoto, 'hidden');
+    crossButtonBigPhoto.addEventListener('click', function () {
+      addClass(bigPhoto, 'hidden');
+    });
+  });
+}
 
 // Наполнение тега модалки контентом
-// 1. Путь к фотографии
-bigPhoto.querySelector('.big-picture__img img').src = data[0].url;
+var pasteContentToBigPhoto = function (index) {
+  // 1. Путь к фотографии
+  bigPhoto.querySelector('.big-picture__img img').src = data[index].url;
 
-// 2. Содержимое счетчика лайков
-bigPhoto.querySelector('.likes-count').textContent = data[0].likes;
+  // 2. Содержимое счетчика лайков
+  bigPhoto.querySelector('.likes-count').textContent = data[index].likes;
 
-// 3. Содержимое счетчика комментариев
-bigPhoto.querySelector('.comments-count').textContent = data[0].comments.length;
+  // 3. Содержимое счетчика комментариев
+  bigPhoto.querySelector('.comments-count').textContent = data[index].comments.length;
 
-// 4. Содержимое блока комментариев
-// Список ul комментариев
-var commentsList = bigPhoto.querySelector('.social__comments');
+  // 4. Содержимое блока комментариев
+  // Список ul комментариев
+  var commentsList = bigPhoto.querySelector('.social__comments');
 
-// Коллекция li комментариев
-var commentsCollection = commentsList.querySelectorAll('.social__comment');
+  // Коллекция li комментариев
+  var commentsCollection = commentsList.querySelectorAll('.social__comment');
 
-// Последняя li в псевдомассиве 'commentsCollection'
-var lastLi = commentsList.querySelectorAll('.social__comment:last-child')[0];
+  // Последняя li в псевдомассиве 'commentsCollection'
+  var lastLi = commentsList.querySelectorAll('.social__comment:last-child')[0];
 
-// Удаление лишней li если комментарий всего один
-if (data[0].comments.length < commentsCollection.length) {
-  hideBlock(lastLi);
-}
+  // Удаление лишней li если комментарий всего один
+  if (data[index].comments.length < commentsCollection.length) {
+    addClass(lastLi, 'visually-hidden');
+  }
 
-// Заполнение атрибутов и свойств контентом
-for (i = 0; i < data[0].comments.length; i++) {
-  commentsCollection[i].querySelector('img').src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
-  commentsCollection[i].querySelector('.social__text').textContent = data[0].comments[i];
-}
+  // Заполнение атрибутов и свойств контентом
+  for (i = 0; i < data[index].comments.length; i++) {
+    commentsCollection[i].querySelector('img').src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
+    commentsCollection[i].querySelector('.social__text').textContent = data[index].comments[i];
+  }
 
-// Заполнение описания фотографии
-bigPhoto.querySelector('.social__caption').textContent = data[0].description;
+  // Заполнение описания фотографии
+  bigPhoto.querySelector('.social__caption').textContent = data[index].description;
+};
 
 // Cчетчик комментариев
 var commentCount = bigPhoto.querySelector('.social__comment-count');
 
 // Скрытие счетчика комментариев
-hideBlock(commentCount);
+addClass(commentCount, 'visually-hidden');
 
 // Кнопка 'Загрузить еще'
 var buttonLoadMore = bigPhoto.querySelector('.social__loadmore');
 
 // Cкрытие кнопки 'Загрузить еще'
-hideBlock(buttonLoadMore);
+addClass(buttonLoadMore, 'visually-hidden');
+
+// ---
+// Логика открытия/закрытия модального окна загрузки изображения
+// ---
+
+// Константы клавиатурных клавиш
+var ESC_KEYCODE = 27;
+
+// Родительский блок, в котором находятся все элементы загрузки изображения
+var uploadBlock = document.querySelector('.img-upload');
+
+// Форма редактирования изображения
+var uploadOverlay = uploadBlock.querySelector('.img-upload__overlay');
+
+// Блок input загрузки изображения
+var uploadInput = uploadBlock.querySelector('#upload-file');
+
+// Блок закрытия формы редактирования изображения
+var crossButtonUpload = uploadOverlay.querySelector('.img-upload__cancel');
+
+// Функция открытия всплывающего окна
+var openPopup = function (popup) {
+  removeClass(popup, 'hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+// Функция закрытия всплывающего окна
+var closePopup = function (popup) {
+  addClass(popup, 'hidden');
+  // Сброс значения поля выбора файла
+  uploadInput.value = '';
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+// Функция закрытия всплывающего окна по нажатию на ESC
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup(uploadOverlay);
+  }
+};
+
+// Реакция на событие 'change' блока '#upload-file'
+uploadInput.addEventListener('change', function () {
+  openPopup(uploadOverlay);
+});
+
+// Реакция на событие 'click' на блок 'crossButtonUpload'
+crossButtonUpload.addEventListener('click', function () {
+  closePopup(uploadOverlay);
+});
+
+// ---
+// Логика получения уровня эффекта 'effectLevel' при отпускании ползунка
+// ---
+
+// Функция получения CSS-свойства элемента
+var getCssProperty = function (element, property) {
+  return window.getComputedStyle(element, null).getPropertyValue(property);
+};
+
+// Функция удаления последних символов в строке
+var deleteLastSymbols = function (string, quantity) {
+  return string.substring(0, string.length - quantity);
+};
+
+// Ползунок регулировки насыщенности изображения
+var scalePin = uploadBlock.querySelector('.scale__pin');
+
+// Шкала регулировки ползунка
+var scaleLine = uploadBlock.querySelector('.scale__line');
+
+// Инпут, в свойстве 'value' которого хранится значение уровня эффекта (от 0 до 100)
+var scale = uploadBlock.querySelector('.scale__value');
+
+// Обрабатываем событие 'mouseup' ползунка '.scale__pin'
+scalePin.addEventListener('mouseup', function () {
+  // Находим положение ползунка, обратившись к css-свойству 'left'
+  var pinPosition = getCssProperty(scalePin, 'left');
+
+  // Удаляем 'px' в конце строки и приводим к числу
+  pinPosition = Number(deleteLastSymbols(pinPosition, 2));
+
+  // Находим длину шкалы ползунка, обратившись к css-свойству 'width'
+  var scaleWidth = getCssProperty(scaleLine, 'width');
+
+  // Удаляем 'px' в конце строки и приводим к числу
+  scaleWidth = Number(deleteLastSymbols(scaleWidth, 2));
+
+  // Считаем уровень применяемого эффекта в процентах
+  var effectLevel = 100 * (pinPosition / scaleWidth);
+
+  // Записываем полученное значение в свойство 'value' инпута '.scale__value'
+  scale.value = effectLevel;
+});
+
+// ---
+// Логика переключения фильтров
+// ---
+
+var CSS_CLASS_TEMPLATE = 'effects__preview--';
+
+// Находим изображение
+var image = uploadBlock.querySelector('.img-upload__preview img');
+
+// Список ul эффектов
+var effectsList = uploadBlock.querySelector('.effects__list');
+
+// Коллекция радиоинпутов с эффектами
+var inputCollection = effectsList.querySelectorAll('input');
+
+// Функция применения эффекта
+var applyEffect = function (block, cssClass) {
+  removeAllClasses(block);
+  addClass(block, cssClass);
+};
+
+// Проходимся в цикле по всем инпутам из коллекции
+for (i = 0; i < inputCollection.length; i++) {
+  // Класс эффекта для изображения
+  var cssClass = CSS_CLASS_TEMPLATE + inputCollection[i].value;
+
+  // Проверяем какой радиобаттон в разметке имеет атрибут 'checked'
+  if (inputCollection[i].checked) {
+    applyEffect(image, cssClass);
+  }
+  // Обработчик события 'focus' на радиобаттоне
+  inputCollection[i].addEventListener('focus', function (evt) {
+    // Приставку к классу изображения берем из 'evt'
+    cssClass = CSS_CLASS_TEMPLATE + evt.target.value;
+    applyEffect(image, cssClass);
+  });
+}
