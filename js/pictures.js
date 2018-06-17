@@ -349,7 +349,7 @@ for (i = 0; i < inputCollection.length; i++) {
     applyEffect(image, cssClass);
   }
   // Обработчик события 'focus' на радиобаттоне
-  inputCollection[i].addEventListener('focus', function (evt) {
+  inputCollection[i].addEventListener('change', function (evt) {
     // Приставку к классу изображения берем из 'evt'
     cssClass = CSS_CLASS_TEMPLATE + evt.target.value;
     applyEffect(image, cssClass);
