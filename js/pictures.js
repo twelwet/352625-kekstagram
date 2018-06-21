@@ -348,10 +348,235 @@ for (i = 0; i < inputCollection.length; i++) {
   if (inputCollection[i].checked) {
     applyEffect(image, cssClass);
   }
-  // Обработчик события 'focus' на радиобаттоне
+  // Обработчик события 'change' на радиобаттоне
   inputCollection[i].addEventListener('change', function (evt) {
     // Приставку к классу изображения берем из 'evt'
     cssClass = CSS_CLASS_TEMPLATE + evt.target.value;
     applyEffect(image, cssClass);
   });
 }
+
+// ---
+// Валидация формы отправки изображения
+// ---
+
+var HASHTAG_MAX_LENGTH = 20; // Максимальное количество символов в хэштеге
+var HASHTAG_MIN_LENGTH = 2; // Минимальное количество символов в хэштеге
+var HASHTAG_MAX_QUANTITY = 5; // Максимальное количество хэштегов через пробел
+var HASHTAG_DELIMITER = ' '; // Разделитель между хэштегами
+
+// Объект сообщений об ошибках валидации поля хэштегов:
+// flag = 'false' - ошибки валидации нет,
+// flag = 'true' - есть ошибка валидации,
+// message = 'Текст ошибки валидации'.
+var errorList = {
+  grid: {
+    flag: false,
+    message: 'Хэштег должен начинаться с символа #, хэштеги разделяются пробелом'
+  },
+  length: {
+    flag: false,
+    message: 'Длина хэштега должна быть не меньше ' + HASHTAG_MIN_LENGTH + '-х символов и не должна превышать ' + HASHTAG_MAX_LENGTH + '-ти символов'
+  },
+  quantity: {
+    flag: false,
+    message: 'Количество хэштегов должно быть не более ' + HASHTAG_MAX_QUANTITY
+  },
+  unique: {
+    flag: false,
+    message: 'Хэштеги должны быть уникальны'
+  }
+};
+
+// Блок формы
+var form = uploadBlock.querySelector('.img-upload__form');
+
+// Блок хэштегов
+var hashtagsField = form.querySelector('.text__hashtags');
+
+// Блок комментария
+var commentField = form.querySelector('.text__description');
+
+// Кнопка отправки формы
+var submitButton = form.querySelector('.img-upload__submit');
+
+// Покраска обводки элемента
+var paintBorder = function (element, color) {
+  element.style.border = '1px solid ' + color;
+};
+
+// Функция очистки поля ввода
+var clearContent = function (input) {
+  input.value = '';
+};
+
+// Функция проверки длины поля
+var checkMaxLength = function (input) {
+  var validity = input.validity;
+  if (validity.tooLong) {
+    input.setCustomValidity('Текст не должен превышать ' + input.maxLength + ' символов');
+    paintBorder(input, 'red');
+  } else {
+    input.setCustomValidity('');
+    paintBorder(input, 'black');
+  }
+};
+
+// Функция незакрывания окна формы при нажатии на ESC когда инпут в фокусе
+var dontCloseForm = function (input) {
+  // Обрабатываем событие 'focus'
+  input.addEventListener('focus', function () {
+    // Предотвращение закрытия формы по нажатию на ESC
+    document.removeEventListener('keydown', onPopupEscPress);
+  });
+
+  // Обрабатываем событие 'blur'
+  input.addEventListener('blur', function () {
+    // Возобновление закрытия формы по нажатию на ESC
+    document.addEventListener('keydown', onPopupEscPress);
+  });
+};
+
+// Функция очистки текста поля по нажатию на ESC
+var clearFieldOnEsc = function (field) {
+  field.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      clearContent(field);
+    }
+  });
+};
+
+// Функция удаляет лишние пробелы (которых больше чем один) в строке
+var deleteSpaces = function (string) {
+  string = string.replace(/\s+/g, ' ').trim();
+  return string;
+};
+
+// Функция перезаписи введенного значения без пробелов
+var rewriteContent = function (element) {
+  element.value = deleteSpaces(element.value);
+};
+
+// Функция смены элементов массива в нижний регистр для удобства сравнения элементов
+var convertToLowerCase = function (array) {
+  for (i = 0; i < array.length; i++) {
+    array[i] = array[i].toLowerCase();
+  }
+};
+
+// Функция возвращает 'true', если хотя бы один элемент массива не начинается с символа #
+var setGridFlag = function (array) {
+  errorList.grid.flag = false;
+  for (i = 0; i < array.length; i++) {
+    if (array[i][0] !== '#') {
+      errorList.grid.flag = true;
+      break;
+    }
+  }
+  return errorList.grid.flag;
+};
+
+// Функция возвращает 'true', если хотя бы один элемент массива имеет длину менее 2-х или более 20-ти символов
+var setLengthFlag = function (array) {
+  errorList.length.flag = false;
+  for (i = 0; i < array.length; i++) {
+    if (array[i].length > HASHTAG_MAX_LENGTH || array[i].length < HASHTAG_MIN_LENGTH) {
+      errorList.length.flag = true;
+      break;
+    }
+  }
+};
+
+// Функция возвращает 'true', если массив состоит более чем из 5 элементов
+var setQuantityFlag = function (array) {
+  errorList.quantity.flag = false;
+  if (array.length > HASHTAG_MAX_QUANTITY) {
+    errorList.quantity.flag = true;
+  }
+  return errorList.quantity.flag;
+};
+
+// Функция возвращает 'true', если массив имеет хотя бы один повторяющийся элемент (регистр не важен)
+var setUniqueFlag = function (array) {
+  // Переводим все элементы массива в нижний регистр для удобства сравнения
+  convertToLowerCase(array);
+  errorList.unique.flag = false;
+  for (i = 0; i < array.length; i++) {
+    for (var j = (i + 1); j < array.length; j++) {
+      if (array[i] === array[j]) {
+        errorList.unique.flag = true;
+        break;
+      }
+    }
+    if (errorList.unique.flag === true) {
+      break;
+    }
+  }
+};
+
+// Функция проставляет флаги в объекте 'errorList'
+var setErrorFlags = function () {
+  var string = hashtagsField.value;
+  // Если строка поля имеет хотя бы один символ, то запускаем процесс валидации
+  if (string !== '') {
+    var array = string.split(HASHTAG_DELIMITER);
+    setQuantityFlag(array);
+    setGridFlag(array);
+    setLengthFlag(array);
+    setUniqueFlag(array);
+    // Если контент поля отсутсвует, то сбрасываем флаги ошибок (т.к. поле не имеет атрибут 'required')
+  } else {
+    errorList.grid.flag = false;
+    errorList.length.flag = false;
+    errorList.quantity.flag = false;
+    errorList.unique.flag = false;
+  }
+};
+
+// Функция генерирует сообщение ошибок валидации исходя из соответствующих флагов
+var generateErrorMessage = function () {
+  var errors = [];
+  var errorMessage = '';
+  if (errorList.grid.flag) {
+    errors.push(errorList.grid.message);
+  }
+  if (errorList.quantity.flag) {
+    errors.push(errorList.quantity.message);
+  }
+  if (errorList.length.flag) {
+    errors.push(errorList.length.message);
+  }
+  if (errorList.unique.flag) {
+    errors.push(errorList.unique.message);
+  }
+  // Если массив ошибок 'errors' наполнился хотя бы одним сообщением
+  if (errors.length > 0) {
+    // Превращаем массив в строку
+    errorMessage = errors.join('. \n');
+    // Красим валидируемое поле в красный
+    paintBorder(hashtagsField, 'red');
+    // Если массив ошибок 'errors' остался пустым
+  } else {
+    // Обнуляем на всякий случай сообщение об ошибках
+    errorMessage = '';
+    // Сброс цвета обводки валидируемого поля
+    paintBorder(hashtagsField, 'black');
+  }
+  return errorMessage;
+};
+
+hashtagsField.addEventListener('blur', function () {
+  rewriteContent(hashtagsField);
+  setErrorFlags();
+  hashtagsField.setCustomValidity(generateErrorMessage());
+});
+
+submitButton.addEventListener('submit', function () {
+  checkMaxLength(commentField);
+});
+
+dontCloseForm(commentField);
+dontCloseForm(hashtagsField);
+
+clearFieldOnEsc(commentField);
+clearFieldOnEsc(hashtagsField);
