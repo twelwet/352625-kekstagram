@@ -388,6 +388,9 @@ var errorList = {
   }
 };
 
+// Массив названий ошибок
+var errorNames = Object.keys(errorList);
+
 // Блок формы
 var form = uploadBlock.querySelector('.img-upload__form');
 
@@ -515,10 +518,9 @@ var setErrorFlags = function () {
     setUniqueFlag(array);
     // Если контент поля отсутсвует, то сбрасываем флаги ошибок (т.к. поле не имеет атрибут 'required')
   } else {
-    errorList.hashtag.flag = false;
-    errorList.length.flag = false;
-    errorList.quantity.flag = false;
-    errorList.unique.flag = false;
+    for (i = 0; i < errorNames.length; i++) {
+      errorList[errorNames[i]].flag = false;
+    }
   }
 };
 
@@ -526,17 +528,10 @@ var setErrorFlags = function () {
 var generateErrorMessage = function () {
   var errors = [];
   var errorMessage = '';
-  if (errorList.hashtag.flag) {
-    errors.push(errorList.hashtag.message);
-  }
-  if (errorList.quantity.flag) {
-    errors.push(errorList.quantity.message);
-  }
-  if (errorList.length.flag) {
-    errors.push(errorList.length.message);
-  }
-  if (errorList.unique.flag) {
-    errors.push(errorList.unique.message);
+  for (i = 0; i < errorNames.length; i++) {
+    if (errorList[errorNames[i]].flag) {
+      errors.push(errorList[errorNames[i]].message);
+    }
   }
   // Если массив ошибок 'errors' наполнился хотя бы одним сообщением
   if (errors.length > 0) {
