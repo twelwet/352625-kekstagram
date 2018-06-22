@@ -441,15 +441,9 @@ var clearFieldOnEsc = function (field) {
   });
 };
 
-// Функция удаляет лишние пробелы (которых больше чем один) в строке
-var deleteSpaces = function (string) {
-  string = string.replace(/\s+/g, ' ').trim();
-  return string;
-};
-
-// Функция перезаписи введенного значения без пробелов
+// Функция перезаписи введенного значения без избыточных пробелов
 var rewriteContent = function (element) {
-  element.value = deleteSpaces(element.value);
+  element.value = element.value.replace(/\s+/g, ' ').trim();
 };
 
 // Функция смены элементов массива в нижний регистр для удобства сравнения элементов
