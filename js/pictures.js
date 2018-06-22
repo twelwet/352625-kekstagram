@@ -374,7 +374,7 @@ var errorList = {
     flag: false,
     message: 'Хэштег должен начинаться с символа #, хэштеги разделяются пробелом'
   },
-  length: {
+  wrongLength: {
     flag: false,
     message: 'Длина хэштега должна быть не меньше ' + HASHTAG_MIN_LENGTH + '-х символов и не должна превышать ' + HASHTAG_MAX_LENGTH + '-ти символов'
   },
@@ -382,7 +382,7 @@ var errorList = {
     flag: false,
     message: 'Количество хэштегов должно быть не более ' + HASHTAG_MAX_QUANTITY
   },
-  unique: {
+  notUnique: {
     flag: false,
     message: 'Хэштеги должны быть уникальны'
   }
@@ -445,7 +445,7 @@ var clearFieldOnEsc = function (field) {
 };
 
 // Функция перезаписи введенного значения без избыточных пробелов
-var rewriteContent = function (element) {
+var deleteSpaces = function (element) {
   element.value = element.value.replace(/\s+/g, ' ').trim();
 };
 
@@ -469,11 +469,11 @@ var setHashtagFlag = function (array) {
 };
 
 // Функция возвращает 'true', если хотя бы один элемент массива имеет длину менее 2-х или более 20-ти символов
-var setLengthFlag = function (array) {
-  errorList.length.flag = false;
+var setWrongLengthFlag = function (array) {
+  errorList.wrongLength.flag = false;
   for (i = 0; i < array.length; i++) {
     if (array[i].length > HASHTAG_MAX_LENGTH || array[i].length < HASHTAG_MIN_LENGTH) {
-      errorList.length.flag = true;
+      errorList.wrongLength.flag = true;
       break;
     }
   }
@@ -489,18 +489,18 @@ var setQuantityFlag = function (array) {
 };
 
 // Функция возвращает 'true', если массив имеет хотя бы один повторяющийся элемент (регистр не важен)
-var setUniqueFlag = function (array) {
+var setNotUniqueFlag = function (array) {
   // Переводим все элементы массива в нижний регистр для удобства сравнения
   convertToLowerCase(array);
-  errorList.unique.flag = false;
+  errorList.notUnique.flag = false;
   for (i = 0; i < array.length; i++) {
     for (var j = (i + 1); j < array.length; j++) {
       if (array[i] === array[j]) {
-        errorList.unique.flag = true;
+        errorList.notUnique.flag = true;
         break;
       }
     }
-    if (errorList.unique.flag === true) {
+    if (errorList.notUnique.flag === true) {
       break;
     }
   }
@@ -514,8 +514,8 @@ var setErrorFlags = function () {
     var array = string.split(HASHTAG_DELIMITER);
     setQuantityFlag(array);
     setHashtagFlag(array);
-    setLengthFlag(array);
-    setUniqueFlag(array);
+    setWrongLengthFlag(array);
+    setNotUniqueFlag(array);
     // Если контент поля отсутсвует, то сбрасываем флаги ошибок (т.к. поле не имеет атрибут 'required')
   } else {
     for (i = 0; i < errorNames.length; i++) {
@@ -550,7 +550,7 @@ var generateErrorMessage = function () {
 };
 
 hashtagsField.addEventListener('blur', function () {
-  rewriteContent(hashtagsField);
+  deleteSpaces(hashtagsField);
   setErrorFlags();
   hashtagsField.setCustomValidity(generateErrorMessage());
 });
