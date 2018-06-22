@@ -400,11 +400,6 @@ var commentField = form.querySelector('.text__description');
 // Кнопка отправки формы
 var submitButton = form.querySelector('.img-upload__submit');
 
-// Покраска обводки элемента
-var paintBorder = function (element, color) {
-  element.style.border = '1px solid ' + color;
-};
-
 // Функция очистки поля ввода
 var clearContent = function (input) {
   input.value = '';
@@ -415,10 +410,10 @@ var checkMaxLength = function (input) {
   var validity = input.validity;
   if (validity.tooLong) {
     input.setCustomValidity('Текст не должен превышать ' + input.maxLength + ' символов');
-    paintBorder(input, 'red');
+    addClass(input, 'text__field--error');
   } else {
     input.setCustomValidity('');
-    paintBorder(input, 'black');
+    removeClass(input, 'text__field--error');
   }
 };
 
@@ -554,13 +549,13 @@ var generateErrorMessage = function () {
     // Превращаем массив в строку
     errorMessage = errors.join('. \n');
     // Красим валидируемое поле в красный
-    paintBorder(hashtagsField, 'red');
+    addClass(hashtagsField, 'text__field--error');
     // Если массив ошибок 'errors' остался пустым
   } else {
     // Обнуляем на всякий случай сообщение об ошибках
     errorMessage = '';
     // Сброс цвета обводки валидируемого поля
-    paintBorder(hashtagsField, 'black');
+    removeClass(hashtagsField, 'text__field--error');
   }
   return errorMessage;
 };

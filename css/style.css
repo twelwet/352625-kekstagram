@@ -853,6 +853,13 @@ main {
   border-radius: 5px;
 }
 
+/* Стиль ошибки валидации */
+
+.text__field--error {
+  border: 1px solid red;
+}
+
+
 
 /* Кнопка отправки формы */
 
