@@ -370,7 +370,7 @@ var HASHTAG_DELIMITER = ' '; // Разделитель между хэштега
 // flag = 'true' - есть ошибка валидации,
 // message = 'Текст ошибки валидации'.
 var errorList = {
-  grid: {
+  hashtag: {
     flag: false,
     message: 'Хэштег должен начинаться с символа #, хэштеги разделяются пробелом'
   },
@@ -465,15 +465,15 @@ var convertToLowerCase = function (array) {
 };
 
 // Функция возвращает 'true', если хотя бы один элемент массива не начинается с символа #
-var setGridFlag = function (array) {
-  errorList.grid.flag = false;
+var setHashtagFlag = function (array) {
+  errorList.hashtag.flag = false;
   for (i = 0; i < array.length; i++) {
     if (array[i][0] !== '#') {
-      errorList.grid.flag = true;
+      errorList.hashtag.flag = true;
       break;
     }
   }
-  return errorList.grid.flag;
+  return errorList.hashtag.flag;
 };
 
 // Функция возвращает 'true', если хотя бы один элемент массива имеет длину менее 2-х или более 20-ти символов
@@ -521,12 +521,12 @@ var setErrorFlags = function () {
   if (string !== '') {
     var array = string.split(HASHTAG_DELIMITER);
     setQuantityFlag(array);
-    setGridFlag(array);
+    setHashtagFlag(array);
     setLengthFlag(array);
     setUniqueFlag(array);
     // Если контент поля отсутсвует, то сбрасываем флаги ошибок (т.к. поле не имеет атрибут 'required')
   } else {
-    errorList.grid.flag = false;
+    errorList.hashtag.flag = false;
     errorList.length.flag = false;
     errorList.quantity.flag = false;
     errorList.unique.flag = false;
@@ -537,8 +537,8 @@ var setErrorFlags = function () {
 var generateErrorMessage = function () {
   var errors = [];
   var errorMessage = '';
-  if (errorList.grid.flag) {
-    errors.push(errorList.grid.message);
+  if (errorList.hashtag.flag) {
+    errors.push(errorList.hashtag.message);
   }
   if (errorList.quantity.flag) {
     errors.push(errorList.quantity.message);
