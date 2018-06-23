@@ -2,7 +2,7 @@
 
 // Функция получения рандомных чисел из диапазона
 var getRandomNumber = function (min, max) {
-  return Math.floor((Math.random() * (max - min + 1) + min));
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 // Функция получения случайного значения из массива
@@ -12,7 +12,6 @@ var getRandomArrayValue = function (array) {
 
 // Функция генерации данных
 var generateData = function () {
-
   // Максимальное значение номера фотографии
   var MAX_PHOTO_NUMBER = 25;
 
@@ -95,7 +94,9 @@ var generateData = function () {
 var data = generateData();
 
 // Блок шаблона
-var photoTemplate = document.querySelector('#picture').content.querySelector('.picture__link');
+var photoTemplate = document
+  .querySelector('#picture')
+  .content.querySelector('.picture__link');
 
 // Фрагмент
 var fragment = document.createDocumentFragment();
@@ -113,7 +114,8 @@ var createPhoto = function (array) {
   photo.querySelector('.picture__stat--likes').textContent = array.likes;
 
   // 2. Содержимое счетчика комментариев
-  photo.querySelector('.picture__stat--comments').textContent = array.comments.length;
+  photo.querySelector('.picture__stat--comments').textContent =
+    array.comments.length;
 
   // 3. Путь к фотографии
   photo.querySelector('.picture__img').src = array.url;
@@ -164,7 +166,7 @@ for (i = 0; i < picturesCollection.length; i++) {
     var src = evt.target.attributes.src.value;
 
     // Порядковый номер изображения
-    var photoNumber = (Number(src.substr(7, 2)) - 1);
+    var photoNumber = Number(src.substr(7, 2)) - 1;
     // Наполняем модалку большого изображения контентом
     pasteContentToBigPhoto(photoNumber);
 
@@ -185,7 +187,8 @@ var pasteContentToBigPhoto = function (index) {
   bigPhoto.querySelector('.likes-count').textContent = data[index].likes;
 
   // 3. Содержимое счетчика комментариев
-  bigPhoto.querySelector('.comments-count').textContent = data[index].comments.length;
+  bigPhoto.querySelector('.comments-count').textContent =
+    data[index].comments.length;
 
   // 4. Содержимое блока комментариев
   // Список ul комментариев
@@ -204,12 +207,15 @@ var pasteContentToBigPhoto = function (index) {
 
   // Заполнение атрибутов и свойств контентом
   for (i = 0; i < data[index].comments.length; i++) {
-    commentsCollection[i].querySelector('img').src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
-    commentsCollection[i].querySelector('.social__text').textContent = data[index].comments[i];
+    commentsCollection[i].querySelector('img').src =
+      'img/avatar-' + getRandomNumber(1, 6) + '.svg';
+    commentsCollection[i].querySelector('.social__text').textContent =
+      data[index].comments[i];
   }
 
   // Заполнение описания фотографии
-  bigPhoto.querySelector('.social__caption').textContent = data[index].description;
+  bigPhoto.querySelector('.social__caption').textContent =
+    data[index].description;
 };
 
 // Cчетчик комментариев
@@ -275,47 +281,107 @@ crossButtonUpload.addEventListener('click', function () {
 });
 
 // ---
+// Логика перетаскивания ползунка и уровня шкалы насыщенности изображения
+// +
 // Логика получения уровня эффекта 'effectLevel' при отпускании ползунка
+// +
+// Логика применения уровня эффекта на изображение
 // ---
 
-// Функция получения CSS-свойства элемента
-var getCssProperty = function (element, property) {
-  return window.getComputedStyle(element, null).getPropertyValue(property);
-};
-
-// Функция удаления последних символов в строке
-var deleteLastSymbols = function (string, quantity) {
-  return string.substring(0, string.length - quantity);
-};
-
-// Ползунок регулировки насыщенности изображения
-var scalePin = uploadBlock.querySelector('.scale__pin');
+// Фиелдсет, содержащий инпут, шкалу и ползунок
+var scaleBlock = uploadBlock.querySelector('.scale');
 
 // Шкала регулировки ползунка
-var scaleLine = uploadBlock.querySelector('.scale__line');
+var scaleLine = scaleBlock.querySelector('.scale__line');
+
+// Ползунок регулировки насыщенности изображения
+var scalePin = scaleBlock.querySelector('.scale__pin');
+
+// Уровень шкалы насыщенности изображения
+var scaleLevel = scaleBlock.querySelector('.scale__level');
 
 // Инпут, в свойстве 'value' которого хранится значение уровня эффекта (от 0 до 100)
-var scale = uploadBlock.querySelector('.scale__value');
+var scaleInput = scaleBlock.querySelector('.scale__value');
 
-// Обрабатываем событие 'mouseup' ползунка '.scale__pin'
-scalePin.addEventListener('mouseup', function () {
-  // Находим положение ползунка, обратившись к css-свойству 'left'
-  var pinPosition = getCssProperty(scalePin, 'left');
-
-  // Удаляем 'px' в конце строки и приводим к числу
-  pinPosition = Number(deleteLastSymbols(pinPosition, 2));
-
-  // Находим длину шкалы ползунка, обратившись к css-свойству 'width'
-  var scaleWidth = getCssProperty(scaleLine, 'width');
-
-  // Удаляем 'px' в конце строки и приводим к числу
-  scaleWidth = Number(deleteLastSymbols(scaleWidth, 2));
-
-  // Считаем уровень применяемого эффекта в процентах
-  var effectLevel = 100 * (pinPosition / scaleWidth);
+var updateInputValue = function () {
+  // Считаем уровень применяемого эффекта (получаемое значение от 0 до 100)
+  var effectLevel = 100 * (scalePin.offsetLeft / scaleLine.offsetWidth);
 
   // Записываем полученное значение в свойство 'value' инпута '.scale__value'
-  scale.value = effectLevel;
+  scaleInput.value = effectLevel;
+};
+
+// Функция применения уровня эффекта
+var applyEffectLevel = function (block, filterLevel) {
+  updateInputValue();
+  switch (block.classList.value) {
+    case 'effects__preview--chrome': // Логика подсчета уровня эффекта 'Хром' (диапазон от 0 до 1)
+      block.style.filter = 'grayscale(' + filterLevel / 100 + ')';
+      break;
+    case 'effects__preview--sepia': // Логика подсчета уровня эффекта 'Хром' (диапазон от 0 до 1)
+      block.style.filter = 'sepia(' + filterLevel / 100 + ')';
+      break;
+    case 'effects__preview--marvin': // Логика подсчета уровня эффекта 'Марвин' (диапазон от 0% до 100%)
+      block.style.filter = 'invert(' + filterLevel + '%)';
+      break;
+    case 'effects__preview--phobos': // Логика подсчета уровня эффекта 'Фобос' (диапазон от 0px до 10px)
+      block.style.filter = 'blur(' + filterLevel / 10 + 'px)';
+      break;
+    case 'effects__preview--heat': // Логика подсчета уровня эффекта 'Жара' (диапазон от 0 до 10)
+      block.style.filter = 'brightness(' + filterLevel / 10 + ')';
+      break;
+  }
+};
+
+scalePin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  // Запоминаем стартовую горизонтальную координату
+  var startCoordX = evt.clientX;
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    // Запоминаем смещение по горизонтали
+    var shiftX = startCoordX - moveEvt.clientX;
+
+    // Переписываем стартовую горизонтальную координату
+    startCoordX = moveEvt.clientX;
+
+    // Меняем отступ слева у ползунка (разница между смещением относительно родительского элемента и смещением мыши)
+    scalePin.style.left = scalePin.offsetLeft - shiftX + 'px';
+
+    // Приравниваем ширину уровня насыщенности и отступ ползунка
+    scaleLevel.style.width = scalePin.style.left;
+
+    // Ограничиваем область перемещения ползунка слева
+    if (scalePin.offsetLeft < 0) {
+      scalePin.style.left = 0 + 'px';
+    }
+
+    // Ограничиваем область перемещения ползунка справа
+    if (scalePin.offsetLeft > scaleLine.offsetWidth) {
+      scalePin.style.left = scaleLine.offsetWidth + 'px';
+    }
+
+    // Применяем уровень фильтра при перемещении мыши
+    applyEffectLevel(image, scaleInput.value);
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    // Применяем уровень фильтра при отпускании мыши
+    applyEffectLevel(image, scaleInput.value);
+
+    // Удаляем обработчики событий на перемещние и отпускание кнопки мыши
+    scaleBlock.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  // Добавляем обработчики событий на перемещение и отпускание кнопки мыши
+  scaleBlock.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
 
 // ---
@@ -337,6 +403,7 @@ var inputCollection = effectsList.querySelectorAll('input');
 var applyEffect = function (block, cssClass) {
   removeAllClasses(block);
   addClass(block, cssClass);
+  applyEffectLevel(image, scaleInput.value);
 };
 
 // Проходимся в цикле по всем инпутам из коллекции
@@ -350,6 +417,13 @@ for (i = 0; i < inputCollection.length; i++) {
   }
   // Обработчик события 'change' на радиобаттоне
   inputCollection[i].addEventListener('change', function (evt) {
+    if (evt.target.value === 'none') {
+      // Скрываем блок шкалы на изображении-оргинале
+      addClass(scaleBlock, 'hidden');
+    } else {
+      // Показываем блок шкалы во всех остальных случаях
+      removeClass(scaleBlock, 'hidden');
+    }
     // Приставку к классу изображения берем из 'evt'
     cssClass = CSS_CLASS_TEMPLATE + evt.target.value;
     applyEffect(image, cssClass);
@@ -372,11 +446,17 @@ var HASHTAG_DELIMITER = ' '; // Разделитель между хэштега
 var errorList = {
   hashtag: {
     flag: false,
-    message: 'Хэштег должен начинаться с символа #, хэштеги разделяются пробелом'
+    message:
+      'Хэштег должен начинаться с символа #, хэштеги разделяются пробелом'
   },
   wrongLength: {
     flag: false,
-    message: 'Длина хэштега должна быть не меньше ' + HASHTAG_MIN_LENGTH + '-х символов и не должна превышать ' + HASHTAG_MAX_LENGTH + '-ти символов'
+    message:
+      'Длина хэштега должна быть не меньше ' +
+      HASHTAG_MIN_LENGTH +
+      '-х символов и не должна превышать ' +
+      HASHTAG_MAX_LENGTH +
+      '-ти символов'
   },
   quantity: {
     flag: false,
@@ -412,7 +492,9 @@ var clearContent = function (input) {
 var checkMaxLength = function (input) {
   var validity = input.validity;
   if (validity.tooLong) {
-    input.setCustomValidity('Текст не должен превышать ' + input.maxLength + ' символов');
+    input.setCustomValidity(
+        'Текст не должен превышать ' + input.maxLength + ' символов'
+    );
     addClass(input, 'text__field--error');
   } else {
     input.setCustomValidity('');
@@ -472,7 +554,10 @@ var setHashtagFlag = function (array) {
 var setWrongLengthFlag = function (array) {
   errorList.wrongLength.flag = false;
   for (i = 0; i < array.length; i++) {
-    if (array[i].length > HASHTAG_MAX_LENGTH || array[i].length < HASHTAG_MIN_LENGTH) {
+    if (
+      array[i].length > HASHTAG_MAX_LENGTH ||
+      array[i].length < HASHTAG_MIN_LENGTH
+    ) {
       errorList.wrongLength.flag = true;
       break;
     }
@@ -494,7 +579,7 @@ var setNotUniqueFlag = function (array) {
   convertToLowerCase(array);
   errorList.notUnique.flag = false;
   for (i = 0; i < array.length; i++) {
-    for (var j = (i + 1); j < array.length; j++) {
+    for (var j = i + 1; j < array.length; j++) {
       if (array[i] === array[j]) {
         errorList.notUnique.flag = true;
         break;
