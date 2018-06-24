@@ -330,7 +330,30 @@ var applyEffectLevel = function (block, filterLevel) {
     case 'effects__preview--heat': // Логика подсчета уровня эффекта 'Жара' (диапазон от 0 до 10)
       block.style.filter = 'brightness(' + filterLevel / 10 + ')';
       break;
+    default:
+      break;
   }
+};
+
+// Функция задает положение ползунка
+var setPosition = function (number) {
+  // Меняем отступ слева у ползунка (разница между смещением относительно родительского элемента и смещением мыши)
+  scalePin.style.left = scalePin.offsetLeft - number + 'px';
+
+  // Ограничиваем область перемещения ползунка слева
+  if (scalePin.offsetLeft < 0) {
+    scalePin.style.left = 0 + 'px';
+  }
+
+  // Ограничиваем область перемещения ползунка справа
+  if (scalePin.offsetLeft > scaleLine.offsetWidth) {
+    scalePin.style.left = scaleLine.offsetWidth + 'px';
+  }
+};
+
+// Функция возвращает положение ползунка
+var getPosition = function () {
+  return scalePin.style.left;
 };
 
 scalePin.addEventListener('mousedown', function (evt) {
@@ -348,21 +371,10 @@ scalePin.addEventListener('mousedown', function (evt) {
     // Переписываем стартовую горизонтальную координату
     startCoordX = moveEvt.clientX;
 
-    // Меняем отступ слева у ползунка (разница между смещением относительно родительского элемента и смещением мыши)
-    scalePin.style.left = scalePin.offsetLeft - shiftX + 'px';
+    setPosition(shiftX);
 
     // Приравниваем ширину уровня насыщенности и отступ ползунка
-    scaleLevel.style.width = scalePin.style.left;
-
-    // Ограничиваем область перемещения ползунка слева
-    if (scalePin.offsetLeft < 0) {
-      scalePin.style.left = 0 + 'px';
-    }
-
-    // Ограничиваем область перемещения ползунка справа
-    if (scalePin.offsetLeft > scaleLine.offsetWidth) {
-      scalePin.style.left = scaleLine.offsetWidth + 'px';
-    }
+    scaleLevel.style.width = getPosition();
 
     // Применяем уровень фильтра при перемещении мыши
     applyEffectLevel(image, scaleInput.value);
