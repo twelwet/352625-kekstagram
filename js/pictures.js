@@ -335,20 +335,8 @@ var applyEffectLevel = function (block, filterLevel) {
   }
 };
 
-// Функция задает положение ползунка
 var setPosition = function (number) {
-  // Меняем отступ слева у ползунка (разница между смещением относительно родительского элемента и смещением мыши)
-  scalePin.style.left = scalePin.offsetLeft - number + 'px';
-
-  // Ограничиваем область перемещения ползунка слева
-  if (scalePin.offsetLeft < 0) {
-    scalePin.style.left = 0 + 'px';
-  }
-
-  // Ограничиваем область перемещения ползунка справа
-  if (scalePin.offsetLeft > scaleLine.offsetWidth) {
-    scalePin.style.left = scaleLine.offsetWidth + 'px';
-  }
+  scalePin.style.left = number + 'px';
 };
 
 // Функция возвращает положение ползунка
@@ -371,7 +359,18 @@ scalePin.addEventListener('mousedown', function (evt) {
     // Переписываем стартовую горизонтальную координату
     startCoordX = moveEvt.clientX;
 
-    setPosition(shiftX);
+    // Положение ползунка - это разница между смещением от родительского элемента и смещением мыши
+    setPosition(scalePin.offsetLeft - shiftX);
+
+    // Ограничиваем область перемещения ползунка слева
+    if (scalePin.offsetLeft < 0) {
+      setPosition(0);
+    }
+
+    // Ограничиваем область перемещения ползунка справа
+    if (scalePin.offsetLeft > scaleLine.offsetWidth) {
+      setPosition(scaleLine.offsetWidth);
+    }
 
     // Приравниваем ширину уровня насыщенности и отступ ползунка
     scaleLevel.style.width = getPosition();
