@@ -1,16 +1,16 @@
 @font-face {
-  font-family: "Open Sans";
-  src: url("../fonts/OpenSansCondensed-Bold.woff2") format("woff2"),
-      url("../fonts/OpenSansCondensed-Bold.woff") format("woff");
+  font-family: 'Open Sans';
+  src: url('../fonts/OpenSansCondensed-Bold.woff2') format('woff2'),
+    url('../fonts/OpenSansCondensed-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Open Sans";
-  src: url("../fonts/OpenSans-Regular.woff2") format("woff2"),
-      url("../fonts/OpenSans-Regular.woff") format("woff");
+  font-family: 'Open Sans';
+  src: url('../fonts/OpenSans-Regular.woff2') format('woff2'),
+    url('../fonts/OpenSans-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -20,11 +20,11 @@
 *::before,
 *::after {
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -40,7 +40,7 @@ main {
 
 .content-box-component {
   -webkit-box-sizing: content-box;
-          box-sizing: content-box;
+  box-sizing: content-box;
 }
 
 .hidden {
@@ -59,7 +59,7 @@ main {
   white-space: nowrap;
 
   -webkit-clip-path: inset(100%);
-          clip-path: inset(100%);
+  clip-path: inset(100%);
 
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -75,7 +75,6 @@ main {
   overflow: hidden;
 }
 
-
 /* Кнопка закрытия */
 
 .cancel {
@@ -89,7 +88,7 @@ main {
   font-size: 0;
 
   background-color: rgba(255, 255, 255, 0.2);
-  background-image: url("../img/icon-cross.svg");
+  background-image: url('../img/icon-cross.svg');
   background-position: center;
   background-repeat: no-repeat;
 
@@ -107,10 +106,9 @@ main {
 
 .cancel:active {
   -webkit-transform: translateY(1px);
-      -ms-transform: translateY(1px);
-          transform: translateY(1px);
+  -ms-transform: translateY(1px);
+  transform: translateY(1px);
 }
-
 
 /* Оверлей */
 
@@ -121,7 +119,7 @@ main {
   z-index: 2;
 
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 
   width: 100%;
   height: 100%;
@@ -130,7 +128,6 @@ main {
 
   background-color: rgba(0, 0, 0, 0.8);
 }
-
 
 /* Фильтр фотографий img-filters */
 
@@ -142,8 +139,8 @@ main {
   display: flex;
 
   -webkit-box-pack: center;
-     -ms-flex-pack: center;
-   justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .img-filters--inactive {
@@ -153,7 +150,7 @@ main {
 .img-filters__button {
   padding: 5px 15px;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: auto;
@@ -175,7 +172,7 @@ main {
 .img-filters__label {
   padding: 5px 15px;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: auto;
@@ -195,7 +192,6 @@ main {
   border-radius: 2px;
 }
 
-
 /* Фотки других пользователей .pictures */
 
 .pictures {
@@ -203,8 +199,8 @@ main {
   display: grid;
   grid-gap: 10px;
 
-  -ms-grid-columns: (1fr)[7];
-      grid-template-columns: repeat(7, 1fr);
+  -ms-grid-columns: (1fr) [7];
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .picture__link {
@@ -231,8 +227,8 @@ main {
   border-radius: 5px;
 
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .picture__link:hover .picture__stats,
@@ -246,7 +242,7 @@ main {
   padding-left: 30px;
   position: relative;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   color: #ffffff;
 }
@@ -256,12 +252,12 @@ main {
 }
 
 .picture__stat::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 5px;
   top: -7px;
 
-  background-image: url("../img/sprite.svg");
+  background-image: url('../img/sprite.svg');
   background-size: 100%;
 }
 
@@ -278,7 +274,6 @@ main {
 
   background-position: 0 -80px;
 }
-
 
 /* Форма загрузки фотографии img-upload */
 
@@ -304,13 +299,12 @@ main {
   min-height: 569px;
 
   background-color: #eed21e;
-  background-image: url("../img/logo-background-1.jpg");
+  background-image: url('../img/logo-background-1.jpg');
   background-repeat: no-repeat;
   background-position: center;
 
   border: none;
 }
-
 
 /* Загрузка фотографии img-upload__start */
 
@@ -321,7 +315,7 @@ main {
   padding: 0;
   min-height: 569px;
 
-  background-image: url("../img/logo-mask.png");
+  background-image: url('../img/logo-mask.png');
   background-repeat: no-repeat;
   background-position: center;
 
@@ -339,7 +333,7 @@ main {
 
   font-size: 0;
 
-  background-image: url("../img/upload-button-bg.png");
+  background-image: url('../img/upload-button-bg.png');
   background-repeat: no-repeat;
   background-position: center;
 
@@ -347,7 +341,7 @@ main {
 }
 
 .img-upload__label::after {
-  content: "";
+  content: '';
   position: absolute;
 
   top: 32px;
@@ -356,22 +350,22 @@ main {
   width: 86px;
   height: 114px;
 
-  background-image: url("../img/upload-button.svg");
+  background-image: url('../img/upload-button.svg');
   background-repeat: no-repeat;
   background-position: center;
 
   -webkit-filter: drop-shadow(0 0 10px #943106);
-          filter: drop-shadow(0 0 10px #943106);
+  filter: drop-shadow(0 0 10px #943106);
 }
 
 .img-upload__label:hover::after,
 .img-upload__label:active::after {
   -webkit-filter: drop-shadow(0 0 10px #622104);
-          filter: drop-shadow(0 0 10px #622104);
+  filter: drop-shadow(0 0 10px #622104);
 
   -webkit-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-          transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .img-upload__input:focus + .img-upload__label {
@@ -388,7 +382,7 @@ main {
   width: 100%;
   height: 100%;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   text-align: center;
   font-weight: 700;
   font-size: 20px;
@@ -405,7 +399,7 @@ main {
 }
 
 .img-upload__message--loading::before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 40%;
   left: 50%;
@@ -416,12 +410,12 @@ main {
   background-color: #8a7d2d;
 
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .img-upload__message--loading::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 40%;
   left: 50%;
@@ -432,12 +426,12 @@ main {
   background-color: #ffe753;
 
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .img-upload__message--processing::before {
-  content: "";
+  content: '';
   position: absolute;
 
   width: 45px;
@@ -446,23 +440,23 @@ main {
   bottom: 40%;
   left: 50%;
 
-  background-image: url("../img/spinner.svg");
+  background-image: url('../img/spinner.svg');
 
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .img-upload__message--error {
   padding-top: 275px;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   text-transform: none;
 }
 
 .img-upload__message--error::before {
-  content: "";
+  content: '';
   position: absolute;
 
   width: 59px;
@@ -471,11 +465,11 @@ main {
   top: 150px;
   left: 50%;
 
-  background-image: url("../img/icon-warning.svg");
+  background-image: url('../img/icon-warning.svg');
 
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .error__links {
@@ -490,7 +484,6 @@ main {
   margin-right: 30px;
 }
 
-
 /* Редактирование фотографии img-upload__overlay */
 
 .img-upload__overlay {
@@ -500,7 +493,7 @@ main {
   z-index: 2;
 
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 
   width: 100%;
   height: 100%;
@@ -517,7 +510,6 @@ main {
   margin-bottom: 30px;
 }
 
-
 /* Кадрирование */
 
 .img-upload__resize {
@@ -526,12 +518,12 @@ main {
   left: 50%;
   z-index: 1;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
 
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .resize {
@@ -564,8 +556,8 @@ main {
 
 .resize__control:active {
   -webkit-transform: translateY(1px);
-      -ms-transform: translateY(1px);
-          transform: translateY(1px);
+  -ms-transform: translateY(1px);
+  transform: translateY(1px);
 }
 
 .resize__control--minus {
@@ -573,7 +565,7 @@ main {
 }
 
 .resize__control--minus::before {
-  content: "–";
+  content: '–';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -583,8 +575,8 @@ main {
   color: #ffffff;
 
   -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .resize__control--value {
@@ -602,7 +594,7 @@ main {
 }
 
 .resize__control--plus::before {
-  content: "+";
+  content: '+';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -612,8 +604,8 @@ main {
   color: #ffffff;
 
   -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .img-upload__preview {
@@ -621,11 +613,11 @@ main {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-     -ms-flex-align: center;
-        align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-     -ms-flex-pack: center;
-   justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 
   width: 600px;
   height: 600px;
@@ -638,7 +630,6 @@ main {
   max-width: 600px;
   max-height: 600px;
 }
-
 
 /* Слайдер. Регулировка глубины фильтра */
 
@@ -660,8 +651,8 @@ main {
   border-radius: 33px;
 
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .scale__value {
@@ -681,8 +672,8 @@ main {
   background-color: rgba(255, 231, 81, 0.4);
 
   -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .scale__pin {
@@ -698,10 +689,11 @@ main {
   border-radius: 50%;
 
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 
   cursor: move;
+  z-index: 10;
 }
 
 .scale__level {
@@ -712,7 +704,6 @@ main {
 
   background-color: #ffe753;
 }
-
 
 /* Эффекты */
 
@@ -732,8 +723,8 @@ main {
   display: flex;
 
   -webkit-box-pack: center;
-     -ms-flex-pack: center;
-   justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 
   list-style: none;
   text-align: center;
@@ -744,7 +735,7 @@ main {
 }
 
 .effects__label {
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 700;
 
   cursor: pointer;
@@ -767,7 +758,7 @@ main {
   font-size: 0;
 
   background-color: #314359;
-  background-image: url("../img/upload-default-image.jpg");
+  background-image: url('../img/upload-default-image.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% auto;
@@ -790,29 +781,28 @@ main {
 
 .effects__preview--chrome {
   -webkit-filter: grayscale(1);
-          filter: grayscale(1);
+  filter: grayscale(1);
 }
 
 .effects__preview--sepia {
   -webkit-filter: sepia(1);
-          filter: sepia(1);
+  filter: sepia(1);
 }
 
 .effects__preview--marvin {
   -webkit-filter: invert(100%);
-          filter: invert(100%);
+  filter: invert(100%);
 }
 
 .effects__preview--phobos {
   -webkit-filter: blur(5px);
-          filter: blur(5px);
+  filter: blur(5px);
 }
 
 .effects__preview--heat {
   -webkit-filter: brightness(3);
-          filter: brightness(3);
+  filter: brightness(3);
 }
-
 
 /* Комментарий */
 
@@ -832,7 +822,7 @@ main {
   margin-bottom: 20px;
   padding: 5px 10px;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   color: #000000;
 
@@ -846,7 +836,7 @@ main {
   margin: 0 auto;
   padding: 15px 10px;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   color: #000000;
 
@@ -859,8 +849,6 @@ main {
   border: 1px solid red;
 }
 
-
-
 /* Кнопка отправки формы */
 
 .img-upload__submit {
@@ -869,7 +857,7 @@ main {
   color: #ffe753;
   text-align: center;
   text-transform: uppercase;
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 700;
 
   background-color: rgba(255, 231, 82, 0.2);
@@ -885,15 +873,14 @@ main {
 
 .img-upload__submit:active {
   -webkit-transform: translateY(1px);
-      -ms-transform: translateY(1px);
-          transform: translateY(1px);
+  -ms-transform: translateY(1px);
+  transform: translateY(1px);
 }
 
 .img-upload__submit:disabled,
 .img-upload__submit--disabled {
   opacity: 0.3;
 }
-
 
 /* Кнопка закрытия формы */
 
@@ -905,10 +892,9 @@ main {
 
 .img-upload__cancel:active {
   -webkit-transform: translateY(1px);
-      -ms-transform: translateY(1px);
-          transform: translateY(1px);
+  -ms-transform: translateY(1px);
+  transform: translateY(1px);
 }
-
 
 /* Просмотр фотки .big-picture */
 
@@ -923,8 +909,8 @@ main {
   padding-bottom: 60px;
 
   -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 .big-picture__img img {
@@ -938,13 +924,13 @@ main {
 
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-     -ms-flex-direction: column;
-         flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 
   max-width: 600px;
 
   color: #000000;
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   text-transform: none;
 
@@ -959,12 +945,12 @@ main {
   display: flex;
 
   -webkit-box-pack: start;
-     -ms-flex-pack: start;
-   justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 
   -webkit-box-align: flex-start;
-     -ms-flex-align: flex-start;
-        align-items: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
 
   border-bottom: 1px solid #cccccc;
 }
@@ -972,7 +958,7 @@ main {
 .social__picture {
   display: block;
   -ms-flex-negative: 0;
-        flex-shrink: 0;
+  flex-shrink: 0;
   margin-right: 15px;
 }
 
@@ -1001,7 +987,7 @@ main {
 }
 
 .likes-count::before {
-  content: "";
+  content: '';
   position: absolute;
 
   top: 3px;
@@ -1010,7 +996,7 @@ main {
   width: 20px;
   height: 18px;
 
-  background-image: url("../img/sprite.svg");
+  background-image: url('../img/sprite.svg');
   background-size: 100%;
 
   background-position: 0 -150px;
@@ -1029,7 +1015,7 @@ main {
 
 .social__comments {
   -ms-flex-preferred-size: 100%;
-               flex-basis: 100%;
+  flex-basis: 100%;
 
   list-style: none;
 
@@ -1047,8 +1033,8 @@ main {
   display: flex;
 
   -webkit-box-align: center;
-     -ms-flex-align: center;
-        align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .social__comment-count {
@@ -1072,7 +1058,7 @@ main {
 
 .social__loadmore--active::after,
 .social__loadmore:active::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 180px;
   right: 0;
@@ -1080,7 +1066,7 @@ main {
   width: 23px;
   height: 23px;
 
-  background-image: url("../img/spinner-blue.svg");
+  background-image: url('../img/spinner-blue.svg');
 }
 
 .social__text {
@@ -1131,15 +1117,15 @@ main {
 
   font-size: 0;
 
-  background-image: url("../img/sprite.svg");
+  background-image: url('../img/sprite.svg');
   background-size: 100%;
   background-position: 0 0;
 
   opacity: 0.6;
 
   -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 
   border: none;
 }
@@ -1153,7 +1139,6 @@ main {
   background-position: 0 -48px;
   opacity: 1;
 }
-
 
 /* Футер */
 
@@ -1169,12 +1154,12 @@ main {
   display: flex;
 
   -webkit-box-align: start;
-     -ms-flex-align: start;
-        align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
 
   -webkit-box-pack: justify;
-     -ms-flex-pack: justify;
-   justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .copyright {
@@ -1218,7 +1203,7 @@ main {
 
   font-size: 0;
 
-  background-image: url("../img/sprite-social.svg");
+  background-image: url('../img/sprite-social.svg');
   background-repeat: no-repeat;
   background-size: 29px 274px;
 
@@ -1243,14 +1228,13 @@ main {
   background-position: 0 -105px;
 }
 
-
 @media (min-width: 1024px) and (max-width: 1359px) {
   .container {
     width: 980px;
   }
 
   .pictures {
-    -ms-grid-columns: (1fr)[5];
+    -ms-grid-columns: (1fr) [5];
     grid-template-columns: repeat(5, 1fr);
   }
 
@@ -1271,7 +1255,7 @@ main {
   }
 
   .pictures {
-    -ms-grid-columns: (1fr)[3];
+    -ms-grid-columns: (1fr) [3];
     grid-template-columns: repeat(3, 1fr);
   }
 
