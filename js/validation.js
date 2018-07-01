@@ -51,9 +51,6 @@
   // Блок комментария
   var commentField = form.querySelector('.text__description');
 
-  // Кнопка отправки формы
-  var submitButton = form.querySelector('.img-upload__submit');
-
   // Функция очистки поля ввода
   var clearContent = function (input) {
     input.value = '';
@@ -211,8 +208,31 @@
     hashtagsField.setCustomValidity(generateErrorMessage());
   });
 
-  submitButton.addEventListener('submit', function () {
+  var setDefaultForm = function () {
+    form.reset();
+  };
+
+  var onSuccess = function () {
+    setDefaultForm();
+  };
+
+  var onError = function (message) {
+    var node = document.createElement('div');
+    node.style.backgroundColor = 'black';
+    node.style.margin = 'auto';
+    node.style.textAlign = 'center';
+    node.style.position = 'relative';
+    node.style.fontSize = '18px';
+    node.style.color = 'white';
+    node.textContent = message;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
     checkMaxLength(commentField);
+    window.backend.save(new FormData(form), onSuccess, onError);
   });
 
   dontCloseForm(commentField);
