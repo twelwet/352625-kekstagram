@@ -10,7 +10,7 @@
 </head>
 
 <body>
-
+  <div class="backend-error backend-error--download hidden"></div>
   <main>
 
     <section class="img-filters img-filters--inactive container">
@@ -113,8 +113,8 @@
                   <input class="text__hashtags" name="hashtags" placeholder="#хэш-тег" maxlength="104">
                   <textarea class="text__description" name="description" placeholder="Ваш комментарий..." maxlength="140"></textarea>
                 </fieldset>
-
                 <button type="submit" class="img-upload__submit" id="upload-submit">Опубликовать</button>
+                <div class="backend-error backend-error--upload hidden"></div>
               </div>
             </div>
           </form>

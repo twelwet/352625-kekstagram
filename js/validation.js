@@ -208,31 +208,47 @@
     hashtagsField.setCustomValidity(generateErrorMessage());
   });
 
+  commentField.addEventListener('change', function () {
+    checkMaxLength(commentField);
+  });
+
   var setDefaultForm = function () {
     form.reset();
   };
 
+  var errorBlock = document.querySelector('.backend-error--upload');
+
   var onSuccess = function () {
+    errorBlock.textContent = '';
+    window.utils.addClass(errorBlock, 'hidden');
     setDefaultForm();
+    window.utils.closePopup(window.utils.uploadOverlay);
   };
 
   var onError = function (message) {
-    var node = document.createElement('div');
-    node.style.backgroundColor = 'black';
-    node.style.margin = 'auto';
-    node.style.textAlign = 'center';
-    node.style.position = 'relative';
-    node.style.fontSize = '18px';
-    node.style.color = 'white';
-    node.textContent = message;
-    document.body.insertAdjacentElement('afterbegin', node);
+    errorBlock.textContent = message;
+    window.utils.removeClass(errorBlock, 'hidden');
+  };
+
+  var validateForm = function () {
+    var isValid = true;
+    for (var i = 0; i < errorNames.length; i++) {
+      if (errorList[errorNames[i]].flag) {
+        isValid = false;
+        break;
+      }
+    }
+    if (commentField.validity.tooLong) {
+      isValid = false;
+    }
+    return isValid;
   };
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-
-    checkMaxLength(commentField);
-    window.backend.save(new FormData(form), onSuccess, onError);
+    if (validateForm()) {
+      window.backend.save(new FormData(form), onSuccess, onError);
+    }
   });
 
   dontCloseForm(commentField);
