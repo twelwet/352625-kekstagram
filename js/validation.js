@@ -100,10 +100,13 @@
   };
 
   // Функция смены элементов массива в нижний регистр для удобства сравнения элементов
-  var convertToLowerCase = function (array) {
-    for (var i = 0; i < array.length; i++) {
-      array[i] = array[i].toLowerCase();
-    }
+  var returnLow = function (array) {
+    return array.map(function (element) {
+      return element.toLowerCase();
+    });
+    // for (var i = 0; i < array.length; i++) {
+    //  array[i] = array[i].toLowerCase();
+    // }
   };
 
   // Функция возвращает 'true', если хотя бы один элемент массива не начинается с символа #
@@ -144,11 +147,11 @@
   // Функция возвращает 'true', если массив имеет хотя бы один повторяющийся элемент (регистр не важен)
   var setNotUniqueFlag = function (array) {
     // Переводим все элементы массива в нижний регистр для удобства сравнения
-    convertToLowerCase(array);
+    var lowArray = returnLow(array);
     errorList.notUnique.flag = false;
-    for (var i = 0; i < array.length; i++) {
-      for (var j = i + 1; j < array.length; j++) {
-        if (array[i] === array[j]) {
+    for (var i = 0; i < lowArray.length; i++) {
+      for (var j = i + 1; j < lowArray.length; j++) {
+        if (lowArray[i] === lowArray[j]) {
           errorList.notUnique.flag = true;
           break;
         }
