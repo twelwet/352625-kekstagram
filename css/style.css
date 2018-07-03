@@ -1228,19 +1228,14 @@ main {
   background-position: 0 -105px;
 }
 
-.backend-error {
+.network-error {
+  position: relative;
   margin: auto;
   text-align: center;
   font-size: 18px;
   color: white;
-}
-
-.backend-error--download {
   background-color: red;
-}
-
-.backend-error--upload {
-  background-color: black;
+  z-index: 20;
 }
 
 @media (min-width: 1024px) and (max-width: 1359px) {

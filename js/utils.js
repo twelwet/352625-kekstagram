@@ -28,6 +28,9 @@
   // Инпут, в свойстве 'value' которого хранится значение уровня эффекта (от 0 до 100)
   var scaleInput = scaleBlock.querySelector('.scale__value');
 
+  // Находим блок, содержащий текст сетевой ошибки (скрыт по-умолчанию)
+  var errorBlock = document.querySelector('.network-error');
+
   window.utils = {
     // Функция получения рандомных чисел из диапазона
     getRandomNumber: function (min, max) {
@@ -77,6 +80,7 @@
     scaleBlock: scaleBlock,
     scaleLine: scaleLine,
     scalePin: scalePin,
-    scaleInput: scaleInput
+    scaleInput: scaleInput,
+    errorBlock: errorBlock
   };
 })();

@@ -31,7 +31,7 @@
     xhr.addEventListener('timeout', function () {
       callbackError('Запрос не успел выполниться за ' + xhr.timeout + ' мс');
     });
-    xhr.timeout = 3000;
+    xhr.timeout = 1000;
     return xhr;
   };
 

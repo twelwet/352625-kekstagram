@@ -216,18 +216,16 @@
     form.reset();
   };
 
-  var errorBlock = document.querySelector('.backend-error--upload');
-
   var onSuccess = function () {
-    errorBlock.textContent = '';
-    window.utils.addClass(errorBlock, 'hidden');
+    window.utils.errorBlock.textContent = '';
+    window.utils.addClass(window.utils.errorBlock, 'hidden');
     setDefaultForm();
     window.utils.closePopup(window.utils.uploadOverlay);
   };
 
   var onError = function (message) {
-    errorBlock.textContent = message;
-    window.utils.removeClass(errorBlock, 'hidden');
+    window.utils.errorBlock.textContent = message;
+    window.utils.removeClass(window.utils.errorBlock, 'hidden');
   };
 
   var validateForm = function () {
