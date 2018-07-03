@@ -4,8 +4,8 @@
   var updateInputValue = function () {
     // Считаем уровень применяемого эффекта (получаемое значение от 0 до 100)
     var effectLevel =
-      100 *
-      (window.utils.scalePin.offsetLeft / window.utils.scaleLine.offsetWidth);
+      Math.round(100 *
+      (window.utils.scalePin.offsetLeft / window.utils.scaleLine.offsetWidth));
 
     // Записываем полученное значение в свойство 'value' инпута '.scale__value'
     window.utils.scaleInput.value = effectLevel;

@@ -51,9 +51,6 @@
   // Блок комментария
   var commentField = form.querySelector('.text__description');
 
-  // Кнопка отправки формы
-  var submitButton = form.querySelector('.img-upload__submit');
-
   // Функция очистки поля ввода
   var clearContent = function (input) {
     input.value = '';
@@ -103,10 +100,13 @@
   };
 
   // Функция смены элементов массива в нижний регистр для удобства сравнения элементов
-  var convertToLowerCase = function (array) {
-    for (var i = 0; i < array.length; i++) {
-      array[i] = array[i].toLowerCase();
-    }
+  var returnLow = function (array) {
+    return array.map(function (element) {
+      return element.toLowerCase();
+    });
+    // for (var i = 0; i < array.length; i++) {
+    //  array[i] = array[i].toLowerCase();
+    // }
   };
 
   // Функция возвращает 'true', если хотя бы один элемент массива не начинается с символа #
@@ -147,11 +147,11 @@
   // Функция возвращает 'true', если массив имеет хотя бы один повторяющийся элемент (регистр не важен)
   var setNotUniqueFlag = function (array) {
     // Переводим все элементы массива в нижний регистр для удобства сравнения
-    convertToLowerCase(array);
+    var lowArray = returnLow(array);
     errorList.notUnique.flag = false;
-    for (var i = 0; i < array.length; i++) {
-      for (var j = i + 1; j < array.length; j++) {
-        if (array[i] === array[j]) {
+    for (var i = 0; i < lowArray.length; i++) {
+      for (var j = i + 1; j < lowArray.length; j++) {
+        if (lowArray[i] === lowArray[j]) {
           errorList.notUnique.flag = true;
           break;
         }
@@ -211,8 +211,45 @@
     hashtagsField.setCustomValidity(generateErrorMessage());
   });
 
-  submitButton.addEventListener('submit', function () {
+  commentField.addEventListener('change', function () {
     checkMaxLength(commentField);
+  });
+
+  var setDefaultForm = function () {
+    form.reset();
+  };
+
+  var onSuccess = function () {
+    window.utils.errorBlock.textContent = '';
+    window.utils.addClass(window.utils.errorBlock, 'hidden');
+    setDefaultForm();
+    window.utils.closePopup(window.utils.uploadOverlay);
+  };
+
+  var onError = function (message) {
+    window.utils.errorBlock.textContent = message;
+    window.utils.removeClass(window.utils.errorBlock, 'hidden');
+  };
+
+  var validateForm = function () {
+    var isValid = true;
+    for (var i = 0; i < errorNames.length; i++) {
+      if (errorList[errorNames[i]].flag) {
+        isValid = false;
+        break;
+      }
+    }
+    if (commentField.validity.tooLong) {
+      isValid = false;
+    }
+    return isValid;
+  };
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    if (validateForm()) {
+      window.backend.save(new FormData(form), onSuccess, onError);
+    }
   });
 
   dontCloseForm(commentField);

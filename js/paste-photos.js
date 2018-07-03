@@ -35,18 +35,19 @@
   // ---
   // 2. Вставка миниатюр изображений на страницу
   // ---
+  window.pastePhotos = function (data) {
+    // Фрагмент
+    var fragment = document.createDocumentFragment();
 
-  // Фрагмент
-  var fragment = document.createDocumentFragment();
+    // Пустой контейнер фотографий
+    var photosList = document.querySelector('.pictures');
 
-  // Пустой контейнер фотографий
-  var photosList = document.querySelector('.pictures');
+    // Заполнение фрагмента миниатюрами изображений
+    for (var i = 0; i < data.length; i++) {
+      fragment.appendChild(createPhoto(data[i]));
+    }
 
-  // Заполнение фрагмента миниатюрами изображений
-  for (var i = 0; i < window.data.length; i++) {
-    fragment.appendChild(createPhoto(window.data[i]));
-  }
-
-  // Вставка фрагмента на страницу
-  photosList.appendChild(fragment);
+    // Вставка фрагмента на страницу
+    photosList.appendChild(fragment);
+  };
 })();
