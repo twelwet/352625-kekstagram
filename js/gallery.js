@@ -5,15 +5,36 @@
 // ---
 
 (function () {
+  // Обрабатываем событие 'click' на кнопках фильтров
+  for (var i = 0; i < window.filter.buttons.length; i++) {
+    window.filter.buttons[i].addEventListener('click', function (evt) {
+      var targetElement = evt.target;
+      window.filter.activateButton(targetElement);
+      switch (targetElement.id) {
+        case 'filter-popular':
+          window.filter.popular(window.data);
+          break;
+        case 'filter-new':
+          window.filter.new(window.data);
+          break;
+        case 'filter-discussed':
+          window.filter.discussed(window.data);
+          break;
+        default:
+          break;
+      }
+    });
+  }
 
   // Объявим callback-функцию которая отрисует пины
   // при успешной загрузке данных
   var onLoad = function (data) {
+    window.data = data;
     window.utils.errorBlock.textContent = '';
     window.utils.addClass(window.utils.errorBlock, 'hidden');
-    window.pastePhotos(data);
+    window.filter.container.show();
+    window.photos.paste(data);
     window.activatePreview();
-    window.data = data;
   };
 
   // Объявим callback-функцию, которая сообщит об ошибке
