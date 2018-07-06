@@ -13,8 +13,8 @@
   // Находим список комментариев в верстке
   var commentsList = preview.querySelector('.social__comments');
 
-  // Сохраняем первый комментарий в глобальную переменную для шаблона
-  var createCommentTemplate = function () {
+  // Клонируем верстку комментария из шаблона в глобальную переменную
+  var cloneCommentTemplate = function () {
     window.commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment').cloneNode(true);
   };
 
@@ -103,7 +103,7 @@
 
   window.activatePreview = function () {
     // Создаем шаблон комментария
-    createCommentTemplate();
+    cloneCommentTemplate();
 
     // Удаляем встроенные в верстку комментарии
     clearComments();
