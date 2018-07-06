@@ -18,6 +18,11 @@
     window.commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment').cloneNode(true);
   };
 
+  // Функция получения рандомных целых чисел из диапазона
+  var getRandomNumber = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
   // Объявляем функцию удаления комментариев из списка
   var clearComments = function () {
     while (commentsList.children[0]) {
@@ -65,7 +70,7 @@
       var comment = window.commentTemplate.cloneNode(true);
       // Наполнение тега <li> контентом:
       // Произвольная картинка аватара ко
-      comment.querySelector('.social__picture').src = 'img/avatar-' + window.utils.getRandomNumber(1, 6) + '.svg';
+      comment.querySelector('.social__picture').src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
 
       // Текст комментария
       comment.querySelector('.social__text').textContent = window.data[index].comments[commentIndex];

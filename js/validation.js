@@ -104,9 +104,6 @@
     return array.map(function (element) {
       return element.toLowerCase();
     });
-    // for (var i = 0; i < array.length; i++) {
-    //  array[i] = array[i].toLowerCase();
-    // }
   };
 
   // Функция возвращает 'true', если хотя бы один элемент массива не начинается с символа #

@@ -13,9 +13,14 @@
   // Коллекция радиоинпутов с эффектами
   var inputCollection = effectsList.querySelectorAll('input');
 
+  // Функция удаления всех классов блока 'block'
+  var removeAllClasses = function (block) {
+    block.className = '';
+  };
+
   // Функция применения эффекта
   var applyEffect = function (block, cssClass) {
-    window.utils.removeAllClasses(block);
+    removeAllClasses(block);
     window.utils.addClass(block, cssClass);
     window.applyEffectLevel(window.utils.image, window.utils.scaleInput.value);
   };
