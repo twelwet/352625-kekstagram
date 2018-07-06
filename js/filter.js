@@ -9,6 +9,11 @@
   // Коллекция кнопок-фильтров
   var filters = filterContainer.querySelectorAll('.img-filters__button');
 
+  // Объявим функцию, которая возвращает рандомное число от -0.5 до 0.5
+  var compareRandom = function () {
+    return Math.random() - 0.5;
+  };
+
   window.filter = {
     // Фильтр 'Популярные' (оставляем данные как есть после загрузки)
     popular: function (data) {
@@ -18,12 +23,7 @@
     // Фильтр 'Новые' (10 рандомных фотографий из загруженных данных)
     new: function (data) {
       window.photos.remove();
-      var newData = [];
-      var temporaryData = data.slice();
-      for (var i = 0; i < NEW_FILTER_QANTITY; i++) {
-        var randomIndex = window.utils.getRandomNumber(0, temporaryData.length - 1);
-        newData.push(temporaryData.splice(randomIndex, 1)[0]);
-      }
+      var newData = data.slice().sort(compareRandom).splice(0, NEW_FILTER_QANTITY);
       window.photos.paste(newData);
     },
     // Фильтр 'Обсуждаемые' (ранжируем данные по убыванию количества комментариев)
