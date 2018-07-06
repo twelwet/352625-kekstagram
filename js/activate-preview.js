@@ -44,6 +44,8 @@
 
   // Объявляем функцию создания превью
   var createPreview = function (index) {
+    var commentQuantity = window.data[index].comments.length;
+
     // 1. Путь к фотографии
     preview.querySelector('.big-picture__img img').src = window.data[index].url;
 
@@ -52,7 +54,7 @@
 
     // 3. Содержимое счетчика комментариев
     preview.querySelector('.comments-count').textContent =
-      window.data[index].comments.length;
+      commentQuantity;
 
     // Заполнение описания фотографии
     preview.querySelector('.social__caption').textContent =
@@ -80,8 +82,8 @@
       var fragment = document.createDocumentFragment();
 
       // Наполнение фрагмента
-      if (window.data[index].comments.length < COMMENT_QUANTITY) {
-        var counter = window.data[index].comments.length;
+      if (commentQuantity < COMMENT_QUANTITY) {
+        var counter = commentQuantity;
       } else {
         counter = COMMENT_QUANTITY;
       }
@@ -94,7 +96,7 @@
       commentsList.appendChild(fragment);
     };
 
-    if (commentsList.children.length === 0) {
+    if (!commentsList.children.length) {
       pasteComments();
     }
   };
@@ -117,8 +119,8 @@
     };
 
     // Проходимся в цикле по всем ссылкам на изображения из коллекции
-    for (var i = 0; i < photoLinks.length; i++) {
-      photoLinks[i].addEventListener('click', function (evt) {
+    photoLinks.forEach(function (element) {
+      element.addEventListener('click', function (evt) {
         var targetElement = evt.currentTarget;
 
         // Находим строку пути к фотографии
@@ -139,6 +141,6 @@
           }
         });
       });
-    }
+    });
   };
 })();
