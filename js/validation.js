@@ -109,27 +109,25 @@
   // Функция возвращает 'true', если хотя бы один элемент массива не начинается с символа #
   var setHashtagFlag = function (array) {
     errorList.hashtag.flag = false;
-    for (var i = 0; i < array.length; i++) {
-      if (array[i][0] !== '#') {
+    array.some(function (element) {
+      if (element[0] !== '#') {
         errorList.hashtag.flag = true;
-        break;
       }
-    }
+    });
     return errorList.hashtag.flag;
   };
 
   // Функция возвращает 'true', если хотя бы один элемент массива имеет длину менее 2-х или более 20-ти символов
   var setWrongLengthFlag = function (array) {
     errorList.wrongLength.flag = false;
-    for (var i = 0; i < array.length; i++) {
+    array.some(function (element) {
       if (
-        array[i].length > HASHTAG_MAX_LENGTH ||
-        array[i].length < HASHTAG_MIN_LENGTH
+        element.length > HASHTAG_MAX_LENGTH ||
+        element.length < HASHTAG_MIN_LENGTH
       ) {
         errorList.wrongLength.flag = true;
-        break;
       }
-    }
+    });
   };
 
   // Функция возвращает 'true', если массив состоит более чем из 5 элементов
@@ -220,7 +218,7 @@
     window.utils.errorBlock.textContent = '';
     window.utils.addClass(window.utils.errorBlock, 'hidden');
     setDefaultForm();
-    window.utils.closePopup(window.utils.uploadOverlay);
+    window.utils.addClass(window.utils.uploadOverlay);
   };
 
   var onError = function (message) {

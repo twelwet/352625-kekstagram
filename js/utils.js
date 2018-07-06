@@ -10,6 +10,9 @@
   // Родительский блок, в котором находятся все элементы загрузки изображения
   var uploadBlock = document.querySelector('.img-upload');
 
+  // Форма редактирования изображения
+  var uploadOverlay = uploadBlock.querySelector('.img-upload__overlay');
+
   // Находим загружаемое изображение
   var image = uploadBlock.querySelector('.img-upload__preview img');
 
@@ -46,6 +49,7 @@
       }
     },
     uploadBlock: uploadBlock,
+    uploadOverlay: uploadOverlay,
     image: image,
     scaleBlock: scaleBlock,
     scaleLine: scaleLine,

@@ -14,18 +14,20 @@
     return Math.random() - 0.5;
   };
 
+  var fnWithDebounce = window.debounce(window.photos.paste);
+
   window.filter = {
     // Фильтр 'Популярные' (оставляем данные как есть после загрузки)
     popular: function (data) {
       window.photos.remove();
-      window.photos.paste(data);
+      fnWithDebounce(data);
       window.activatePreview();
     },
     // Фильтр 'Новые' (10 рандомных фотографий из загруженных данных)
     new: function (data) {
       window.photos.remove();
       var newData = data.slice().sort(compareRandom).splice(0, NEW_FILTER_QANTITY);
-      window.debounce(window.photos.paste(newData));
+      fnWithDebounce(newData);
       window.activatePreview();
     },
     // Фильтр 'Обсуждаемые' (ранжируем данные по убыванию количества комментариев)
@@ -35,7 +37,7 @@
       discussingData = discussingData.sort(function (left, right) {
         return right.comments.length - left.comments.length;
       });
-      window.photos.paste(discussingData);
+      fnWithDebounce(discussingData);
       window.activatePreview();
     },
     // Активация (подсветка) кнопки активного фильтра

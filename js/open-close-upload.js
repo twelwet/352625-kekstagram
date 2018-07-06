@@ -18,18 +18,15 @@
   // Функция закрытия попапа по нажатию на Esc
   var onPopupEscPress = function (evt) {
     if (window.utils.isEscPress(evt)) {
-      closePopup(uploadOverlay);
+      closePopup(window.utils.uploadOverlay);
     }
   };
-
-  // Форма редактирования изображения
-  var uploadOverlay = window.utils.uploadBlock.querySelector('.img-upload__overlay');
 
   // Блок input загрузки изображения
   var uploadInput = window.utils.uploadBlock.querySelector('#upload-file');
 
   // Блок закрытия формы редактирования изображения
-  var crossButtonUpload = uploadOverlay.querySelector(
+  var crossButtonUpload = window.utils.uploadOverlay.querySelector(
       '.img-upload__cancel'
   );
 
