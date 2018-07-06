@@ -21,18 +21,18 @@
   };
 
   // Проходимся в цикле по всем инпутам из коллекции
-  for (var i = 0; i < inputCollection.length; i++) {
+  inputCollection.forEach(function (element) {
     // Класс эффекта для изображения
-    var cssClass = CSS_CLASS_TEMPLATE + inputCollection[i].value;
+    var cssClass = CSS_CLASS_TEMPLATE + element.value;
 
     // Проверяем какой радиобаттон в разметке имеет атрибут 'checked'
-    if (inputCollection[i].checked) {
+    if (element.checked) {
       applyEffect(window.utils.image, cssClass);
     }
     // Обработчик события 'change' на радиобаттоне
-    inputCollection[i].addEventListener('change', function (evt) {
+    element.addEventListener('change', function (evt) {
       if (evt.target.value === 'none') {
-        // Скрываем блок шкалы на изображении-оргинале
+        // Скрываем блок шкалы на изображении-оригинале
         window.utils.addClass(window.utils.scaleBlock, 'hidden');
       } else {
         // Показываем блок шкалы во всех остальных случаях
@@ -42,5 +42,5 @@
       cssClass = CSS_CLASS_TEMPLATE + evt.target.value;
       applyEffect(window.utils.image, cssClass);
     });
-  }
+  });
 })();
