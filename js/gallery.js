@@ -5,24 +5,20 @@
 // ---
 
 (function () {
+
+  // Создадим объект, куда сложим функции фильтрации
+  var filters = {
+    'filter-popular': window.filter.popular,
+    'filter-new': window.filter.new,
+    'filter-discussed': window.filter.discussed
+  };
+
   // Обрабатываем событие 'click' на кнопках фильтров
   for (var i = 0; i < window.filter.buttons.length; i++) {
     window.filter.buttons[i].addEventListener('click', function (evt) {
       var targetElement = evt.target;
       window.filter.activateButton(targetElement);
-      switch (targetElement.id) {
-        case 'filter-popular':
-          window.filter.popular(window.data);
-          break;
-        case 'filter-new':
-          window.filter.new(window.data);
-          break;
-        case 'filter-discussed':
-          window.filter.discussed(window.data);
-          break;
-        default:
-          break;
-      }
+      (filters[targetElement.id])(window.data);
     });
   }
 

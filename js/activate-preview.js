@@ -15,7 +15,7 @@
 
   // Сохраняем первый комментарий в глобальную переменную для шаблона
   var createCommentTemplate = function () {
-    window.commentTemplate = commentsList.children[0].cloneNode(true);
+    window.commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment').cloneNode(true);
   };
 
   // Объявляем функцию удаления комментариев из списка

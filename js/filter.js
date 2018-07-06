@@ -19,12 +19,14 @@
     popular: function (data) {
       window.photos.remove();
       window.photos.paste(data);
+      window.activatePreview();
     },
     // Фильтр 'Новые' (10 рандомных фотографий из загруженных данных)
     new: function (data) {
       window.photos.remove();
       var newData = data.slice().sort(compareRandom).splice(0, NEW_FILTER_QANTITY);
       window.photos.paste(newData);
+      window.activatePreview();
     },
     // Фильтр 'Обсуждаемые' (ранжируем данные по убыванию количества комментариев)
     discussed: function (data) {
@@ -34,17 +36,18 @@
         return right.comments.length - left.comments.length;
       });
       window.photos.paste(discussingData);
+      window.activatePreview();
     },
     // Активация (подсветка) кнопки активного фильтра
     activateButton: function (button) {
       window.filter.deactivateButton();
-      button.classList.add('img-filters__button--active');
+      window.utils.addClass(button, 'img-filters__button--active');
     },
     // Деактивация (убирание подсветки) кнопки активного фильтра
     deactivateButton: function () {
       var button = filterContainer.querySelector('.img-filters__button--active');
       if (button !== null) {
-        button.classList.remove('img-filters__button--active');
+        window.utils.removeClass(button, 'img-filters__button--active');
       }
     },
     container: {
