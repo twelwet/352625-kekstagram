@@ -25,7 +25,7 @@
     new: function (data) {
       window.photos.remove();
       var newData = data.slice().sort(compareRandom).splice(0, NEW_FILTER_QANTITY);
-      window.photos.paste(newData);
+      window.debounce(window.photos.paste(newData));
       window.activatePreview();
     },
     // Фильтр 'Обсуждаемые' (ранжируем данные по убыванию количества комментариев)
