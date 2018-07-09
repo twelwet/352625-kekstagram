@@ -218,7 +218,7 @@
     window.utils.errorBlock.textContent = '';
     window.utils.addClass(window.utils.errorBlock, 'hidden');
     setDefaultForm();
-    window.utils.addClass(window.utils.uploadOverlay);
+    window.utils.addClass(window.utils.uploadOverlay, 'hidden');
   };
 
   var onError = function (message) {
