@@ -21,14 +21,12 @@
     popular: function (data) {
       window.photos.remove();
       fnWithDebounce(data);
-      window.activatePreview();
     },
     // Фильтр 'Новые' (10 рандомных фотографий из загруженных данных)
     new: function (data) {
       window.photos.remove();
       var newData = data.slice().sort(compareRandom).splice(0, NEW_FILTER_QANTITY);
       fnWithDebounce(newData);
-      window.activatePreview();
     },
     // Фильтр 'Обсуждаемые' (ранжируем данные по убыванию количества комментариев)
     discussed: function (data) {
@@ -38,7 +36,6 @@
         return right.comments.length - left.comments.length;
       });
       fnWithDebounce(discussingData);
-      window.activatePreview();
     },
     // Активация (подсветка) кнопки активного фильтра
     activateButton: function (button) {

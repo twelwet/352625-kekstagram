@@ -30,7 +30,6 @@
     window.utils.addClass(window.utils.errorBlock, 'hidden');
     window.filter.container.show();
     window.photos.paste(data);
-    window.activatePreview();
   };
 
   // Объявим callback-функцию, которая сообщит об ошибке

@@ -45,6 +45,7 @@
 
       // Вставка фрагмента на страницу
       photosList.appendChild(fragment);
+      window.activatePreview();
     },
     // Удаление миниатюр изображений со страницы
     remove: function () {
