@@ -48,6 +48,12 @@
         return false;
       }
     },
+    // Функция закрытия попапа загрузки изображения по нажатию на Esc
+    onPopupEscPress: function (evt) {
+      if (window.utils.isEscPress(evt)) {
+        window.utils.addClass(uploadOverlay, 'hidden');
+      }
+    },
     uploadBlock: uploadBlock,
     uploadOverlay: uploadOverlay,
     image: image,

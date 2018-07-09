@@ -2,59 +2,63 @@
 
 (function () {
 
-  var SIZES = [25, 50, 75, 100];
+  var STEP = 25;
   var resizeBlock = window.utils.uploadBlock.querySelector('.resize');
   var resizeButtonMinus = resizeBlock.querySelector('.resize__control--minus');
   var resizeButtonPlus = resizeBlock.querySelector('.resize__control--plus');
   var resizeInput = resizeBlock.querySelector('.resize__control--value');
 
-  // Объявим функцию задания размера по умолчанию
-  var setSizeToDefault = function () {
-    resizeInput.value = SIZES[3] + '%';
+  // Объявим функцию задания масштаба по умолчанию
+  var setToDefault = function () {
+    resizeInput.value = '100%';
+    applySize(getCurrentSize());
   };
 
-  // Объявим функцию уменьшения размера
-  var sizeDown = function () {
-    var size = parseInt(resizeInput.value, 10);
-    switch (size) {
-      case SIZES[0]:
-        break;
-      default:
-        resizeInput.value = SIZES[SIZES.indexOf(size) - 1] + '%';
-        break;
+  // Объявим функцию получения текущего масштаба из 'resizeInput' в числовом формате
+  var getCurrentSize = function () {
+    return parseInt(resizeInput.value, 10);
+  };
+
+  // Объявим функцию присвоения масштаба в 'resizeInput' с шагом 'STEP'
+  var applySize = function (size) {
+    if (size < 25) {
+      size = 25;
     }
-  };
-
-  // Объявим функцию увеличения размера
-  var sizeUp = function () {
-    var size = parseInt(resizeInput.value, 10);
-    switch (size) {
-      case SIZES[3]:
-        break;
-      default:
-        resizeInput.value = SIZES[SIZES.indexOf(size) + 1] + '%';
-        break;
+    if (size > 100) {
+      size = 100;
     }
+    resizeInput.value = size + '%';
+    window.utils.image.style.transform = 'scale(' + size / 100 + ')';
   };
 
-  // Объявим функцию применения размера к изображению
-  var applySize = function () {
-    var size = parseInt(resizeInput.value, 10) / 100;
-    window.utils.image.style.transform = 'scale(' + size + ')';
+  // Объявим функцию уменьшения масштаба
+  var zoomOut = function () {
+    applySize(getCurrentSize() - STEP);
+  };
+
+  // Объявим функцию увеличения масштаба
+  var zoomIn = function () {
+    applySize(getCurrentSize() + STEP);
   };
 
   // Зададим значение размера по умочанию
-  setSizeToDefault();
+  setToDefault();
 
-  // Обработаем событие 'click' на кнопке уменьшения размера
+  // Обработаем событие 'click' на кнопке уменьшения масштаба
   resizeButtonMinus.addEventListener('click', function () {
-    sizeDown();
-    applySize();
+    zoomOut();
   });
 
-  // Обработаем событие 'click' на кнопке увеличения размера
+  // Обработаем событие 'click' на кнопке увеличения масштаба
   resizeButtonPlus.addEventListener('click', function () {
-    sizeUp();
-    applySize();
+    zoomIn();
   });
+
+  resizeInput.addEventListener('change', function () {
+    applySize(getCurrentSize());
+  });
+
+  window.imageScaling = {
+    setToDefault: setToDefault
+  };
 })();

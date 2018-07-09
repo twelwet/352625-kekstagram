@@ -15,13 +15,6 @@
     window.utils.addClass(popup, 'hidden');
   };
 
-  // Функция закрытия попапа по нажатию на Esc
-  var onPopupEscPress = function (evt) {
-    if (window.utils.isEscPress(evt)) {
-      closePopup(window.utils.uploadOverlay);
-    }
-  };
-
   // Блок input загрузки изображения
   var uploadInput = window.utils.uploadBlock.querySelector('#upload-file');
 
@@ -33,12 +26,13 @@
   // Реакция на событие 'change' блока '#upload-file'
   uploadInput.addEventListener('change', function () {
     openPopup(window.utils.uploadOverlay);
-    document.addEventListener('keydown', onPopupEscPress);
+    window.imageScaling.setToDefault();
+    document.addEventListener('keydown', window.utils.onPopupEscPress);
   });
 
   // Реакция на событие 'click' на блок 'crossButtonUpload'
   crossButtonUpload.addEventListener('click', function () {
     closePopup(window.utils.uploadOverlay);
-    document.removeEventListener('keydown', onPopupEscPress);
+    document.removeEventListener('keydown', window.utils.onPopupEscPress);
   });
 })();
