@@ -6,17 +6,16 @@
   var resizeBlock = window.utils.uploadBlock.querySelector('.resize');
   var resizeButtonMinus = resizeBlock.querySelector('.resize__control--minus');
   var resizeButtonPlus = resizeBlock.querySelector('.resize__control--plus');
-  var resizeInput = resizeBlock.querySelector('.resize__control--value');
 
   // Объявим функцию задания масштаба по умолчанию
   var setToDefault = function () {
-    resizeInput.value = '100%';
+    window.utils.resizeInput.value = '100%';
     applySize(getCurrentSize());
   };
 
   // Объявим функцию получения текущего масштаба из 'resizeInput' в числовом формате
   var getCurrentSize = function () {
-    return parseInt(resizeInput.value, 10);
+    return parseInt(window.utils.resizeInput.value, 10);
   };
 
   // Объявим функцию присвоения масштаба в 'resizeInput' с шагом 'STEP'
@@ -27,7 +26,7 @@
     if (size > 100) {
       size = 100;
     }
-    resizeInput.value = size + '%';
+    window.utils.resizeInput.value = size + '%';
     window.utils.image.style.transform = 'scale(' + size / 100 + ')';
   };
 
@@ -51,7 +50,7 @@
   resizeButtonPlus.addEventListener('click', onButtonPlusClick);
 
   // Обработаем событие 'change' на инпуте масштаба
-  resizeInput.addEventListener('change', function () {
+  window.utils.resizeInput.addEventListener('change', function () {
     if (isNaN(getCurrentSize())) {
       setToDefault();
     } else {

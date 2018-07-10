@@ -186,23 +186,7 @@
     checkMaxLength(window.utils.commentField);
   });
 
-  var setDefaultForm = function () {
-    window.utils.form.reset();
-  };
-
-  var onSuccess = function () {
-    window.utils.errorBlock.textContent = '';
-    window.utils.addClass(window.utils.errorBlock, 'hidden');
-    setDefaultForm();
-    window.utils.addClass(window.utils.uploadOverlay, 'hidden');
-  };
-
-  var onError = function (message) {
-    window.utils.errorBlock.textContent = message;
-    window.utils.removeClass(window.utils.errorBlock, 'hidden');
-  };
-
-  var validateForm = function () {
+  window.validateForm = function () {
     var isValid = true;
     for (var i = 0; i < errorNames.length; i++) {
       if (errorList[errorNames[i]].flag) {
@@ -215,13 +199,6 @@
     }
     return isValid;
   };
-
-  window.utils.form.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    if (validateForm()) {
-      window.backend.save(new FormData(window.utils.form), onSuccess, onError);
-    }
-  });
 
   clearFieldOnEsc(window.utils.commentField);
   clearFieldOnEsc(window.utils.hashtagsField);
