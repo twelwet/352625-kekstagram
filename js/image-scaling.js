@@ -32,12 +32,12 @@
   };
 
   // Объявим функцию уменьшения масштаба
-  var zoomOut = function () {
+  var onButtonMinusClick = function () {
     applySize(getCurrentSize() - STEP);
   };
 
   // Объявим функцию увеличения масштаба
-  var zoomIn = function () {
+  var onButtonPlusClick = function () {
     applySize(getCurrentSize() + STEP);
   };
 
@@ -45,14 +45,10 @@
   setToDefault();
 
   // Обработаем событие 'click' на кнопке уменьшения масштаба
-  resizeButtonMinus.addEventListener('click', function () {
-    zoomOut();
-  });
+  resizeButtonMinus.addEventListener('click', onButtonMinusClick);
 
   // Обработаем событие 'click' на кнопке увеличения масштаба
-  resizeButtonPlus.addEventListener('click', function () {
-    zoomIn();
-  });
+  resizeButtonPlus.addEventListener('click', onButtonPlusClick);
 
   resizeInput.addEventListener('change', function () {
     if (isNaN(getCurrentSize())) {
