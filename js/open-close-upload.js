@@ -15,6 +15,22 @@
     window.utils.addClass(popup, 'hidden');
   };
 
+  // Функция незакрывания окна формы при нажатии на ESC когда инпут в фокусе
+  var dontCloseForm = function (input) {
+    // Обрабатываем событие 'focus'
+    input.addEventListener('focus', function () {
+      // Предотвращение закрытия формы по нажатию на ESC
+      document.removeEventListener('keydown', window.utils.onPopupEscPress);
+    });
+
+    // Обрабатываем событие 'blur'
+    input.addEventListener('blur', function () {
+      // Возобновление закрытия формы по нажатию на ESC
+      document.addEventListener('keydown', window.utils.onPopupEscPress);
+    });
+  };
+
+
   // Блок input загрузки изображения
   var uploadInput = window.utils.uploadBlock.querySelector('#upload-file');
 
@@ -35,4 +51,9 @@
     closePopup(window.utils.uploadOverlay);
     document.removeEventListener('keydown', window.utils.onPopupEscPress);
   });
+
+  dontCloseForm(window.utils.commentField);
+  dontCloseForm(window.utils.hashtagsField);
+  dontCloseForm(window.utils.resizeInput);
+
 })();

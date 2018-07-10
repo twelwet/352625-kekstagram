@@ -31,6 +31,18 @@
   // Находим блок, содержащий текст сетевой ошибки (скрыт по-умолчанию)
   var errorBlock = document.querySelector('.network-error');
 
+  // Блок формы
+  var form = uploadBlock.querySelector('.img-upload__form');
+
+  // Инпут масштаба картинки
+  var resizeInput = form.querySelector('.resize__control--value');
+
+  // Блок хэштегов
+  var hashtagsField = form.querySelector('.text__hashtags');
+
+  // Блок комментария
+  var commentField = form.querySelector('.text__description');
+
   window.utils = {
     // Функция добавления блоку 'block' класса 'cssClass'
     addClass: function (block, cssClass) {
@@ -61,6 +73,10 @@
     scaleLine: scaleLine,
     scalePin: scalePin,
     scaleInput: scaleInput,
-    errorBlock: errorBlock
+    errorBlock: errorBlock,
+    form: form,
+    resizeInput: resizeInput,
+    hashtagsField: hashtagsField,
+    commentField: commentField
   };
 })();

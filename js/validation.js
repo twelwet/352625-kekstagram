@@ -42,15 +42,6 @@
   // Массив названий ошибок
   var errorNames = Object.keys(errorList);
 
-  // Блок формы
-  var form = window.utils.uploadBlock.querySelector('.img-upload__form');
-
-  // Блок хэштегов
-  var hashtagsField = form.querySelector('.text__hashtags');
-
-  // Блок комментария
-  var commentField = form.querySelector('.text__description');
-
   // Функция очистки поля ввода
   var clearContent = function (input) {
     input.value = '';
@@ -68,21 +59,6 @@
       input.setCustomValidity('');
       window.utils.removeClass(input, 'text__field--error');
     }
-  };
-
-  // Функция незакрывания окна формы при нажатии на ESC когда инпут в фокусе
-  var dontCloseForm = function (input) {
-    // Обрабатываем событие 'focus'
-    input.addEventListener('focus', function () {
-      // Предотвращение закрытия формы по нажатию на ESC
-      document.removeEventListener('keydown', window.utils.onPopupEscPress);
-    });
-
-    // Обрабатываем событие 'blur'
-    input.addEventListener('blur', function () {
-      // Возобновление закрытия формы по нажатию на ESC
-      document.addEventListener('keydown', window.utils.onPopupEscPress);
-    });
   };
 
   // Функция очистки текста поля по нажатию на ESC
@@ -159,7 +135,7 @@
 
   // Функция проставляет флаги в объекте 'errorList'
   var setErrorFlags = function () {
-    var string = hashtagsField.value;
+    var string = window.utils.hashtagsField.value;
     // Если строка поля имеет хотя бы один символ, то запускаем процесс валидации
     if (string !== '') {
       var array = string.split(HASHTAG_DELIMITER);
@@ -189,29 +165,29 @@
       // Превращаем массив в строку
       errorMessage = errors.join('. \n');
       // Красим валидируемое поле в красный
-      window.utils.addClass(hashtagsField, 'text__field--error');
+      window.utils.addClass(window.utils.hashtagsField, 'text__field--error');
       // Если массив ошибок 'errors' остался пустым
     } else {
       // Обнуляем на всякий случай сообщение об ошибках
       errorMessage = '';
       // Сброс цвета обводки валидируемого поля
-      window.utils.removeClass(hashtagsField, 'text__field--error');
+      window.utils.removeClass(window.utils.hashtagsField, 'text__field--error');
     }
     return errorMessage;
   };
 
-  hashtagsField.addEventListener('blur', function () {
-    deleteSpaces(hashtagsField);
+  window.utils.hashtagsField.addEventListener('blur', function () {
+    deleteSpaces(window.utils.hashtagsField);
     setErrorFlags();
-    hashtagsField.setCustomValidity(generateErrorMessage());
+    window.utils.hashtagsField.setCustomValidity(generateErrorMessage());
   });
 
-  commentField.addEventListener('change', function () {
-    checkMaxLength(commentField);
+  window.utils.commentField.addEventListener('change', function () {
+    checkMaxLength(window.utils.commentField);
   });
 
   var setDefaultForm = function () {
-    form.reset();
+    window.utils.form.reset();
   };
 
   var onSuccess = function () {
@@ -234,22 +210,19 @@
         break;
       }
     }
-    if (commentField.validity.tooLong) {
+    if (window.utils.commentField.validity.tooLong) {
       isValid = false;
     }
     return isValid;
   };
 
-  form.addEventListener('submit', function (evt) {
+  window.utils.form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     if (validateForm()) {
-      window.backend.save(new FormData(form), onSuccess, onError);
+      window.backend.save(new FormData(window.utils.form), onSuccess, onError);
     }
   });
 
-  dontCloseForm(commentField);
-  dontCloseForm(hashtagsField);
-
-  clearFieldOnEsc(commentField);
-  clearFieldOnEsc(hashtagsField);
+  clearFieldOnEsc(window.utils.commentField);
+  clearFieldOnEsc(window.utils.hashtagsField);
 })();

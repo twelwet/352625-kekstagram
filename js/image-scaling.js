@@ -50,6 +50,7 @@
   // Обработаем событие 'click' на кнопке увеличения масштаба
   resizeButtonPlus.addEventListener('click', onButtonPlusClick);
 
+  // Обработаем событие 'change' на инпуте масштаба
   resizeInput.addEventListener('change', function () {
     if (isNaN(getCurrentSize())) {
       setToDefault();
