@@ -55,7 +55,11 @@
   });
 
   resizeInput.addEventListener('change', function () {
-    applySize(getCurrentSize());
+    if (isNaN(getCurrentSize())) {
+      setToDefault();
+    } else {
+      applySize(getCurrentSize());
+    }
   });
 
   window.imageScaling = {
